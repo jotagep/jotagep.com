@@ -1,0 +1,35 @@
+---
+import Header from "../components/Header.astro";
+import BlurCircle from "@/components/shared/BlurCircle.astro";
+import theme from "@/data/theme";
+import SEOTags from "@/components/seo/SEOTags.astro";
+
+import "@fontsource/open-sans";
+import "@/styles/tailwind.css";
+import "@/styles/post.css";
+
+export interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <SEOTags title={title} />
+
+  <body
+    class="mx-auto flex min-h-screen max-w-[872px] flex-col gap-9 bg-neutral-950 px-10 py-8 text-sm text-neutral-400 md:gap-20 md:py-16"
+  >
+    <Header />
+    <BlurCircle position="top" color={theme.colors.blur.top} />
+    <BlurCircle position="bottom" color={theme.colors.blur.bottom} />
+    <slot />
+    <style is:global>
+      html {
+        font-family: "Open Sans";
+      }
+    </style>
+  </body>
+</html>
