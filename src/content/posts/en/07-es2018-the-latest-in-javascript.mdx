@@ -1,0 +1,96 @@
+---
+title: ES2018, The Latest in JavaScript
+slug: es2018-the-latest-in-javascript
+publishedAt: 2018-11-05
+cover: '../../../assets/posts/7/hero.png'
+description: ES2018, The New Features of JavaScript. The latest standard to date offers us various enhancements such as rest/spread, asynchronous iterations, etc.
+isPublish: true
+relatedPosts: ['es2018-the-latest-in-javascript', 'es6-new-array-functions']
+translated: es2018-lo-ultimo-de-javascript
+tags: ['javascript']
+---
+
+JavaScript is a living language, I would say a very lively one, and for this reason, it continues to evolve and provide better tools to developers every day. Although the significant change in the "standard" was in 2015 (ES6), they add some functionality every year, and I quite like the ones from this year, especially the ones I'm presenting below.
+
+### Object Rest/Spread Properties
+
+For those familiar with ES6's object or array "destructuring" assignment, this new option will bring them special joy as it makes your work much easier. React (Native) developers have likely been using it for a while now, especially for communication between components. With the example below, you'll understand perfectly why I like it so much 🙂
+
+```js
+const input = { a: 1, b: 2, c: 3 }
+const { x, ...y } = input // rest properties
+
+console.log(x) // 1
+console.log(y) // { b: 2, c: 3 }
+
+const input2 = { d: 4, e: 5 }
+const result = { ...input, ...input2 } // spread properties
+console.log(result) // { a: 1, b: 2, c: 3, d: 4, e: 5 }
+```
+
+In the example, we can observe the **_rest_** parameters, which allow us to represent an indefinite number of arguments and assign them to an object in this case. In the latter part of the example, we see the usage of the **_spread_** operator. Thanks to this operator, we are capable of **replicating an object** or forming a new one from two or more very easily. Without a doubt, these two features have become some of my favorites 🔝.
+
+### Asynchronous Iteration
+
+If you're not familiar with the iterators from ES6 (EcmaScript 2015), let me provide you with quick context using a simple example. An **iterator** is an object that has the **next()** method, which returns an element from a **sequence**. This method returns an object with two properties: _\{ value, done \}_. When the invocation of _next()_ returns an object where the _done_ property is true, the iteration is considered finished.
+
+```js
+const iterable = ['Hello', 'people']
+const iterator = iterable[Symbol.iterator]()
+
+console.log(iterator.next()) // >> { value: 'Hello', done: false }
+console.log(iterator.next()) // >> { value: 'people', done: false }
+console.log(iterator.next()) // >> { value: undefined, done: true }
+
+for (let value of iterable) {
+  console.log(value)
+  // >> 'Hello'
+  // >> 'people'
+}
+```
+
+In the case of asynchronous iterators, it's exactly the same as regular iterators, but they are designed to traverse **asynchronous data structures**. Therefore, instead of returning an object with the pair _\{ value, done \}_, they will return a **promise**.
+
+```js
+const service1 = new Promise((resolve) => resolve('Hello'))
+const service2 = new Promise((resolve) => resolve('people'))
+
+async function* asyncIterable(syncIterable) {
+  yield await service1
+  yield await service2
+}
+
+async function getAsyncData() {
+  for await (const x of asyncIterable()) {
+    // for AWAIT of, remember it
+    console.log(x)
+  }
+}
+
+getAsyncData()
+// >> Hello
+// >> people
+```
+
+As we can see in the example, we can also iterate through the asynchronous iterable using a _for...of_ loop. However, in this case, we'll add the **await** keyword to the loop. This way, we achieve a **completely asynchronous iteration**. This property is extremely useful for programmers who use Node.js, as it greatly simplifies tasks like reading files, etc.
+
+### Promise finally
+
+To be honest, the name is quite a spoiler because it's really descriptive 😅. `finally` is a callback with no value that will be executed when a **promise completes**, regardless of whether it has been successfully fulfilled (then) or caught an error (catch). It's often useful for hiding _loading bars_ or _spinners_ when the loading process concludes.
+
+```js
+fetch('https://jotagep.com/api/posts')
+  .then((res) => {
+    processResponse(res)
+  })
+  .catch((err) => {
+    handleErrors(err)
+  })
+  .finally(() => {
+    hideLoading()
+  })
+```
+
+These are the three new functionalities I wanted to highlight. I also want to point out that a few more have been added, such as tag functions or various RegExp functions, but for now, we won't delve into these topics.
+
+So, folks, I'll be waiting for you in upcoming posts, ready to press those keys. Take care and peace out! ✌️

@@ -1,0 +1,49 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { t } from 'i18next'
+
+import Link from '@/components/shared/Link.astro'
+
+interface Props extends HTMLAttributes<'header'> {
+  center?: boolean
+  title: string
+  pageLink?: {
+    href: string
+    label: string
+  }
+}
+
+const {
+  center = false,
+  title,
+  pageLink,
+  class: extendClass,
+  ...attributes
+} = Astro.props
+---
+
+<header
+  class:list={[
+    'flex w-full flex-row',
+    !pageLink && center ? 'justify-center' : 'justify-between',
+    extendClass,
+  ]}
+  {...attributes}
+>
+  <h3 class="font-lato text-2xl dark:text-neutral-100">{title}</h3>
+  {
+    pageLink && (
+      <>
+        <Link
+          class="hidden items-center md:inline-flex"
+          href={pageLink.href}
+          label={pageLink.label}
+        />
+        <a class="px-2 text-3xl dark:text-white md:hidden" href={pageLink.href}>
+          <span class="sr-only">{t('common.more')}</span>
+          <span aria-hidden="true">+</span>
+        </a>
+      </>
+    )
+  }
+</header>

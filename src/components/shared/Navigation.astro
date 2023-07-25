@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+import { ROUTES } from '@/data/config'
+
+import removeTrailingSlash from '@/utils/removeTrailingSlash'
+
+interface Props extends HTMLAttributes<'nav'> {
+  navs: {
+    href: string
+    label: string
+  }[]
+}
+
+const { navs = [], class: className, ...props } = Astro.props
+let pathname = removeTrailingSlash(Astro.url.pathname)
+
+if (pathname.startsWith(ROUTES.TAG)) {
+  pathname = ROUTES.BLOG
+}
+---
+
+<nav class:list={['flex items-center', className]} {...props}>
+  <ul class="flex flex-row gap-2">
+    {
+      navs.map((item, index) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={{
+              ['hover:text-black dark:hover:text-neutral-100']: true,
+              ['font-bold dark:text-neutral-100']: pathname === item.href,
+            }}
+          >
+            {item.label}
+          </a>
+          {index + 1 < navs.length && <span class="ml-1">/</span>}
+        </li>
+      ))
+    }
+  </ul>
+</nav>

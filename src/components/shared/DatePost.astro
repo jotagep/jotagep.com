@@ -1,0 +1,28 @@
+---
+import i18next, { t } from 'i18next'
+
+import formatDate from '@/utils/formatDate'
+
+import Icon from './Icon.astro'
+
+export interface Props {
+  class?: string
+  date: Date
+}
+
+const { class: className, date } = Astro.props
+
+const currentLanguage = i18next.language
+---
+
+<dl class:list={['flex items-center', className]}>
+  <dt>
+    <span class="sr-only">{t('common.date')}</span>
+    <Icon icon="clock" class="w-4 h-4" />
+  </dt>
+  <dd class="ml-2 text-sm">
+    <time itemprop="datePublished" datetime={date.toISOString()}>
+      {formatDate(date, currentLanguage)}
+    </time>
+  </dd>
+</dl>

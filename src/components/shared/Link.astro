@@ -1,24 +1,33 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types'
 
-type Props = HTMLAttributes<"a"> & {
-  label: string;
-  isUnderline?: boolean;
-};
+const linkColor = {
+  indigo: 'text-indigo-600 dark:text-indigo-400 after:bg-indigo-500',
+  blue: 'text-blue-600 dark:text-blue-400 after:bg-blue-500',
+  green: 'text-green-600 dark:text-green-400 after:bg-green-500',
+  orange: 'text-orange-700 dark:text-orange-400 after:bg-orange-500',
+}
 
-const { label, isUnderline, ...props } = Astro.props;
+export type Props = HTMLAttributes<'a'> & {
+  label?: string
+  color?: keyof typeof linkColor
+}
+
+const { class: className, color, href, label, ...props } = Astro.props
+
+const isExternal = typeof href === 'string' && href.startsWith('http')
 ---
 
 <a
-  href={props.href}
+  {href}
   class:list={{
-    ["hover:text-neutral-100 cursor-pointer"]: true,
-    ["underline decoration-dashed underline-offset-8"]: isUnderline,
+    ['link']: true,
+    [linkColor[color]]: linkColor[color],
+    ['text-neutral-800 after:bg-neutral-800 dark:text-neutral-100 dark:after:bg-neutral-100']:
+      !linkColor[color],
+    [className]: className,
   }}
   {...props}
-  rel="noreferrer"
-  target="_blank"
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+  target={isExternal ? '_blank' : undefined}><slot>{label}</slot></a
 >
-  {label}
-  <span class="sr-only">{label} link</span>
-</a>

@@ -1,0 +1,68 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { localizePath } from 'astro-i18next'
+import i18next from 'i18next'
+import ISO6991 from 'iso-639-1'
+import localeEmoji from 'locale-emoji'
+
+interface LanguageMapping {
+  [localeCode: string]: string
+}
+
+export interface Props extends HTMLAttributes<'select'> {
+  showFlag?: boolean
+  languageMapping?: LanguageMapping
+  translatedPostSlug?: string
+}
+
+const supportedLanguages = i18next.languages
+const currentLanguage = i18next.language
+
+const { pathname } = Astro.url
+const { translatedPostSlug } = Astro.props
+const { slug } = Astro.params
+
+let translatedPath = pathname
+if (translatedPostSlug && slug) {
+  translatedPath = pathname.replace(slug, translatedPostSlug)
+}
+
+const {
+  class: className,
+  showFlag = false,
+  languageMapping,
+  ...attributes
+} = Astro.props
+---
+
+<select
+  class:list={[
+    'bg-transparent dark:focus:bg-neutral-950 cursor-pointer',
+    className,
+  ]}
+  onchange="location = this.value;"
+  {...attributes}
+>
+  {
+    supportedLanguages.map((supportedLanguage: string) => {
+      const isCurrentLanguage = supportedLanguage === currentLanguage
+      const path = isCurrentLanguage ? pathname : translatedPath
+      let value = localizePath(path, supportedLanguage)
+      const flag = showFlag ? localeEmoji(supportedLanguage) + ' ' : ''
+
+      let nativeName = ''
+      if (languageMapping && languageMapping[supportedLanguage]) {
+        nativeName = languageMapping[supportedLanguage]
+      } else {
+        nativeName = ISO6991.getNativeName(supportedLanguage)
+      }
+
+      return (
+        <option value={value} selected={supportedLanguage === currentLanguage}>
+          <span>{flag}</span>
+          <span class="hidden md:inline">{nativeName}</span>
+        </option>
+      )
+    })
+  }
+</select>

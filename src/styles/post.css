@@ -1,39 +1,40 @@
 .post p {
-  @apply leading-7;
-}
-
-.post code {
-  @apply rounded-sm bg-neutral-800 px-1 py-[2px] text-orange-500;
+  @apply text-lg leading-7;
 }
 
 .post h2 {
-  @apply mt-6 text-3xl text-neutral-100;
+  @apply mt-6 text-3xl font-semibold dark:text-neutral-100;
 }
 
 .post h3 {
-  @apply mt-4 text-xl text-neutral-100;
+  @apply mt-4 text-2xl font-semibold dark:text-neutral-100;
 }
 
 .post code {
-  @apply rounded-sm bg-neutral-800 px-1 py-[2px] text-red-500;
+  @apply text-xs md:text-base rounded-sm bg-neutral-800 px-2 py-1 text-yellow-500;
 }
 
 .post a {
-  @apply text-neutral-100 underline;
+  @apply link text-indigo-600 dark:text-indigo-400 after:bg-indigo-500;
 }
 
 .post ul {
-  @apply list-disc;
+  @apply flex flex-col gap-3 text-lg leading-7 pl-5;
+  list-style: square;
 }
 
 .post blockquote {
-  @apply flex flex-row gap-2 before:block before:h-auto before:w-1 before:max-w-[1px] before:bg-red-400 before:content-[''];
+  @apply card italic text-xl flex my-4 p-4 border-l-4 border-neutral-800 dark:border-slate-200;
 }
 
 .post pre {
-  @apply p-4;
+  @apply p-3 md:p-4 my-4 rounded-lg;
 }
 
 .post pre > code {
-  @apply bg-transparent;
+  @apply flex flex-col bg-transparent;
+}
+
+.post img {
+  @apply my-4 mx-auto rounded-lg shadow-lg;
 }

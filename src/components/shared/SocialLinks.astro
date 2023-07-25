@@ -1,0 +1,37 @@
+---
+import config from '@/data/config'
+
+import Icon from './Icon.astro'
+import Link from './Link.astro'
+
+export type Props = {
+  class?: string
+  icons?: boolean
+  separator?: string
+}
+
+const { class: className, icons = false, separator = '•' } = Astro.props
+---
+
+<ul role="list" class:list={['flex flex-row', className]}>
+  {
+    config.socials.map((social, index) => (
+      <li class="inline-flex items-center">
+        {icons ? (
+          <a href={social.link} class="cursor-pointer">
+            <Icon class="cursor-pointer" icon={social.icon} size="28px" />
+          </a>
+        ) : (
+          <Link href={social.link} label={social.label}>
+            {social.label}
+          </Link>
+        )}
+        {index < config.socials.length - 1 && (
+          <span class="mx-3" aria-hidden="true">
+            {separator}
+          </span>
+        )}
+      </li>
+    ))
+  }
+</ul>

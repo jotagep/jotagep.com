@@ -1,0 +1,97 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { t } from 'i18next'
+
+import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
+import Badge from '@/components/shared/Badge/Badge.astro'
+import DatePost from '@/components/shared/DatePost.astro'
+import ImageBlur from '@/components/shared/ImageBlur.astro'
+import Paginator from '@/components/shared/Paginator.astro'
+
+import { type Tag, TAGS } from '@/data/tags'
+
+import Layout from '@/layouts/Layout.astro'
+
+import { getBlogPath, getTagPath } from '@/utils/pathHelper'
+
+interface Props {
+  page: Page<CollectionEntry<'posts'>>
+  seo?: HeadTagsProps['seo']
+}
+
+const { page, seo = {} } = Astro.props
+const { tag: tagParam = '' } = Astro.params
+
+const Tags: Tag[] = [
+  {
+    label: 'All',
+    color: 'white',
+    slug: '',
+  },
+  ...TAGS,
+]
+
+const showPaginator = page.lastPage > 1
+const posts = page.data
+---
+
+<Layout {seo}>
+  <main class="flex flex-col flex-1">
+    <h1 class="hidden md:block mb-4 text-2xl md:text-4xl dark:text-neutral-100">
+      {t('blog.title')}
+    </h1>
+    <ul role="list" class="flex flex-row flex-wrap gap-2">
+      {
+        Tags.map((tag) => (
+          <li>
+            <a href={tag.slug ? getTagPath(tag.slug) : getBlogPath()}>
+              <Badge
+                active={tagParam === tag.slug}
+                class="text-sm"
+                color={tag.color}
+              >
+                {tag.label}
+              </Badge>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <span class="mt-4 mb-8 text-sm">{page.total} posts</span>
+    <div class="flex flex-col">
+      {
+        posts.map((post) => (
+          <article class="group relative flex max-h-40 w-full gap-2 border-t border-gray-300 py-4 transition-colors duration-300 hover:bg-gray-200 dark:border-gray-800 dark:hover:bg-gray-800 md:px-2 md:py-6">
+            <a
+              aria-label={post.data.title}
+              href={getBlogPath(post.slug)}
+              class="absolute inset-0 z-10"
+            />
+            {post.data.cover && (
+              <ImageBlur
+                class="hidden h-28 w-44 rounded-md md:block"
+                src={post.data.cover as ImageMetadata}
+                alt={post.data.title}
+                width={600}
+                transitionName={`post-img-${post.slug}`}
+              />
+            )}
+            <div class="flex flex-1 flex-col items-start gap-3 md:ml-4">
+              <h2
+                class="line-clamp-3 text-lg font-bold md:line-clamp-1 md:text-2xl"
+                transition:name={`post-title-${post.slug}`}
+              >
+                {post.data.title}
+              </h2>
+              <p class="mb-auto hidden text-sm md:line-clamp-2">
+                {post.data.description}
+              </p>
+              <DatePost date={post.data.publishedAt} />
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    {showPaginator && <Paginator {page} />}
+  </main>
+</Layout>

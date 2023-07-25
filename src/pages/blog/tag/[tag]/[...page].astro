@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { changeLanguage } from 'i18next'
+
+import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
+
+import config from '@/data/config'
+import { type Tag, TAGS } from '@/data/tags'
+
+import BlogLayout from '@/layouts/BlogLayout.astro'
+
+import { getPostsByTag } from '@/lib/contentApi'
+
+changeLanguage('en')
+
+export async function getStaticPaths({ paginate }) {
+  const postsByTag = await Promise.all(
+    TAGS.flatMap(async (item) => {
+      const posts = await getPostsByTag(item.slug)
+      return {
+        tag: item,
+        posts,
+      }
+    }),
+  )
+  return postsByTag.flatMap((item) =>
+    paginate(item.posts, {
+      params: { tag: item.tag.slug },
+      props: { tag: item.tag },
+      pageSize: config.postPerPage,
+    }),
+  )
+}
+interface Props {
+  page: Page<CollectionEntry<'posts'>>
+  tag: Tag
+}
+const { page, tag } = Astro.props
+const seo: HeadTagsProps['seo'] = {
+  title: `${tag.label} - All Posts`,
+}
+---
+
+<BlogLayout {page} {seo} />

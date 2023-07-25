@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+import {
+  activeColorClasses,
+  type ColorBadge,
+  hoverColorClasses,
+} from './badgeHelper'
+
+export type Props = HTMLAttributes<'div'> & {
+  active?: boolean
+  color?: ColorBadge
+}
+
+const {
+  active = false,
+  color = 'black',
+  class: className,
+  ...props
+} = Astro.props
+
+const activeColorClass = active
+  ? activeColorClasses[color]
+  : 'bg-black text-white'
+const hoverColorClass = hoverColorClasses[color]
+---
+
+<div
+  class:list={[
+    'px-4 md:px-5 py-3 leading-none rounded-full transition ease-in duration-200',
+    activeColorClass,
+    hoverColorClass,
+    className,
+  ]}
+  {...props}
+>
+  <slot />
+</div>

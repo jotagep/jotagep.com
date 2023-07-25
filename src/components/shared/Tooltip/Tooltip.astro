@@ -1,0 +1,33 @@
+---
+import uniqid from 'uniqid'
+
+import { replaceId } from '@/utils/htmlHelpers'
+
+import ReactTooltip, { type ReactTooltipProps } from './ReactTooltip'
+
+type Props = Pick<ReactTooltipProps, 'content' | 'options'>
+
+export const TOOLTIP_CONTENT = 'tooltip-content'
+
+const { content = '', options = {} } = Astro.props
+
+let html = await Astro.slots.render('default')
+
+const id = uniqid.time('tooltip-')
+html = replaceId(html, id)
+
+let htmlContent = content
+if (Astro.slots.has(TOOLTIP_CONTENT)) {
+  htmlContent = await Astro.slots.render(TOOLTIP_CONTENT)
+}
+---
+
+<ReactTooltip
+  client:idle
+  client:only="react"
+  content={htmlContent}
+  {id}
+  {options}
+>
+  <Fragment set:html={html} />
+</ReactTooltip>

@@ -1,0 +1,28 @@
+---
+import Link from './shared/Link.astro'
+import SocialLinks from './shared/SocialLinks.astro'
+import AstroLogo from './AstroLogo.astro'
+
+const year = new Date().getFullYear()
+---
+
+<footer
+  class="relative flex flex-col md:flex-row mt-8 md:mt-12 gap-4 items-center justify-between pb-4"
+>
+  <SocialLinks />
+  <a
+    href="https://astro.build/"
+    rel="noopener noreferrer"
+    target="_blank"
+    class="hidden md:block absolute left-1/2 -translate-x-1/2 top-0"
+  >
+    <AstroLogo />
+  </a>
+  <div>
+    <span>
+      Powered by
+      <Link color="orange" href="https://astro.build/">Astro</Link></span
+    >
+    <span class="ml-1">© Jotagep {year}</span>
+  </div>
+</footer>

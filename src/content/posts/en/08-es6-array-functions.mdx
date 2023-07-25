@@ -1,0 +1,180 @@
+---
+title: 'ES6: Map, Filter, Reduce & Sort'
+slug: es6-new-array-functions
+publishedAt: 2018-11-14
+cover: '../../../assets/posts/8/hero.png'
+description: These functions added to the array prototype in ES6 help us make our programming more functional and our code cleaner.
+isPublish: true
+relatedPosts:
+  [
+    'es2018-the-latest-in-javascript',
+    'front-end-vs-back-end-vs-full-stack-developer',
+  ]
+translated: es6-array-functions
+tags: ['javascript']
+---
+
+Even if you haven't heard of **functional programming**, you may have used functions like map, filter, reduce, or sort at some point. These functions are incredibly useful and make your code much cleaner and organized.
+
+> Functional programming is a **programming paradigm**, a way of building software that relies mainly on the use of pure functions and avoids shared state and data mutability.
+
+Don't worry, today we won't delve into functional programming – maybe in the future – but it's good to start getting familiar with the terminology. However, we will showcase these **high-order functions**, which are functions that either take other functions as parameters or return one. They are a clear example of this programming style.
+
+### Map()
+
+Let's imagine we have a list of objects in an array. In this example, we'll use football players.
+
+```js
+const players = [
+  { name: 'Messi', team: 'Barcelona' },
+  { name: 'C.Ronaldo', team: 'Juventus' },
+  { name: 'Neymar', team: 'PSG' },
+]
+```
+
+Given this list, imagine that we want to obtain an array with the names of all the players included in it. If we wanted to do this **imperatively**, we would have to iterate through a loop like this.
+
+```js
+const result = []
+
+for (let i = 0; i < players.lenght(); i++) {
+  result.push(players[i].name)
+}
+
+console.log(result)
+
+// OUTPUT -> ['Messi', 'C.Ronaldo', 'Neymar']
+```
+
+But we could also do it in a **more declarative way** using the **map()** function on the array iterator.
+
+```js
+const result = players.map((jugador) => jugador.name)
+
+console.log(result)
+
+// OUTPUT -> ['Messi', 'C.Ronaldo', 'Neymar']
+```
+
+As you can see, we pass a **callback function** as a parameter, which takes each object from the list as an **argument** and returns its name. This method organizes our code in a simpler way, making it a good practice for clean code.
+
+### Filter()
+
+The **filter** function is used similarly to map, but we use it in different situations. In this case, the callback function we pass as an argument **must return a boolean value**. If it's _true_, the item will pass through the filter, and if it's _false_, it won't.
+
+This time we have a different list containing objects representing teams and their points in the standings.
+ta vez tenemos una lista distinta que contiene objetos de equipos y puntos en la clasificación.
+
+```js
+const table = [
+  { team: 'Barcelona', points: 40 },
+  { team: 'Real Madrid', points: 38 },
+  { team: 'Betis', points: 36 },
+  { team: 'Valencia', points: 35 },
+]
+```
+
+Suppose that, for whatever reason, we need an array with the teams that have more than 37 points in the standings. We're in the perfect scenario to use our filter function 🕵️‍♂️.
+
+```js
+const result = table.filter((equipo) => team.points > 37)
+
+console.log(result)
+
+// OUTPUT
+// ======
+// [{team:'Barcelona', points: 40}, {team: 'Real Madrid', points: 38}]
+```
+
+As we see in the callback function, we compare each team's points. If they are greater than 37, it will return **_true_**, so they will be included in our result. Pretty straightforward, right?
+
+### Reduce()
+
+In my opinion, this is the most challenging of the functions I've introduced today, but it's extremely useful if used properly. This function **reduces the array to a single value**. To use it, we'll specify a callback function and an initial value as arguments. In the callback function, we'll pass at least two parameters: **one for the previous value and one for the current value**, and we'll return an operation between the two, which will be added to the initial value.
+
+Still with me? Don't worry if you got a little confused. The example will clarify things perfectly. We have the following list of players.
+
+```js
+const Barcelona = [
+  { player: 'Messi', goals: 30 },
+  { player: 'Suarez', goals: 22 },
+  { player: 'Pique', goals: 3 },
+]
+```
+
+Given the previous list, we want to find out how many goals Barcelona has scored in total. So, it seems like a great opportunity to use **reduce()**.
+
+```js
+const result = Barcelona.reduce((prevPlayer, player) => {
+  return prevPlayer.goles + player.goles
+}, 0)
+
+console.log(result)
+
+// OUTPUT -> 55
+```
+
+We have passed the previous player and the current player as parameters to our callback function, which returns the sum of their goals. We have also specified _zero_ as the initial value in the second parameter of reduce. The result is 55, which is the sum of all their goals. A cleaner way than using a _for_ loop.
+
+### Sort()
+
+This _high-order function_ is used to **sort** arrays. This method is based on the following function:
+
+```js
+function compare(a, b) {
+  if (a is less than b according to the sorting criterion).
+) {
+    return -1; // less than 0
+  }
+  if (a is greater than b according to the sorting criterion) {
+    return 1; // greater than 0
+  }
+  // a should be equal b
+  return 0;
+}
+```
+
+What does this mean? Basically, "a" and "b" are **two objects being compared**, so if in our callback we return a value less than zero, it means "a" is less than "b", and if we return a value greater than zero, it's the opposite. In the case that the returned value is zero, it remains as is, signifying that the two objects being compared are equal.
+
+For this, we will use the same list as in the filter example, but this time sorted in a different way. Let's see the example.
+
+```js
+const table = [
+  { team: 'Real Madrid', points: 38 },
+  { team: 'Betis', points: 36 },
+  { team: 'Barcelona', points: 40 },
+  { team: 'Valencia', points: 35 },
+]
+```
+
+We observe that the ranking is not sorted correctly. Through our **sort()** function, we are going to sort it by points.
+
+```js
+const result = table.sort((a, b) => {
+  return b.points - a.points
+})
+
+// OUTPUT
+// ======
+// [
+//     {team: 'Barcelona', points: 40},
+//     {team: 'Real Madrid', points: 38},
+//     {team: 'Betis', points: 36},
+//     {team: 'Valencia', points: 35}
+// ]
+```
+
+Great! 👍 As we can see, in this case, I have subtracted the points of object "b" from those of "a," as this way the **sorting is in descending order**, meaning the highest value comes first, which is what I'm interested in for a ranking.
+
+### Why Use These Functions When Dealing With Arrays?
+
+- Because we work **directly with objects**, instead of accessing them through an index (array[i]).
+- **We avoid modifying** the initial array, thus preventing **side effects**.
+- We avoid using _for_ loops.
+- We don't create empty arrays and then add objects one by one.
+
+There are a few more **_high order functions_** that were added to the array prototype in ES6, but these are the most commonly used ones.
+
+I hope you've enjoyed today's post 😉. If you have any questions, feel free to reach out to me on [Twitter](https://twitter.com/jotagep_dev) or other social media platforms.
+
+Take care and see you soon!! Peace ✌️.

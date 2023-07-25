@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Open Sans', sans-serif;
+  }
+}
+
+@layer components {
+  .card {
+    @apply dark:text-white bg-slate-200 dark:bg-neutral-800 bg-opacity-50 shadow-sm rounded-lg;
+  }
+  .link {
+    @apply relative;
+  }
+  .link::after {
+    @apply absolute block w-full h-0.5 bottom-0 left-0 transform origin-left scale-x-0 transition-transform duration-300 ease-out;
+    content: '';
+    background-color: inherit;
+  }
+  .link:hover::after {
+    @apply scale-x-100;
+  }
+}

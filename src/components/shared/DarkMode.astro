@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+import Icon from './Icon.astro'
+
+export interface Props extends HTMLAttributes<'button'> {}
+
+const { class: className, ...props } = Astro.props
+---
+
+<button class:list={['p-3 md:p-0', className]} id="dark-mode" {...props}>
+  <Icon class="hidden dark:block" icon="sun" size="24px" />
+  <Icon class="dark:hidden" icon="moon-stars" size="24px" />
+</button>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const darkModeButton = document.querySelector('#dark-mode')
+    darkModeButton.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark')
+      darkModeButton.setAttribute(
+        'title',
+        isDark ? 'Toogle light mode' : 'Toogle dark mode',
+      )
+      localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    })
+  })
+</script>

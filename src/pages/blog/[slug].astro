@@ -1,0 +1,104 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { changeLanguage, t } from 'i18next'
+
+import PostCard from '@/components/PostCard.astro'
+import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
+import Alert from '@/components/shared/Alert.astro'
+import DatePost from '@/components/shared/DatePost.astro'
+import Icon from '@/components/shared/Icon.astro'
+import ImageBlur from '@/components/shared/ImageBlur.astro'
+
+import Layout from '@/layouts/Layout.astro'
+
+import { getPosts, getRelatedPosts } from '@/lib/contentApi'
+
+changeLanguage('en')
+
+export async function getStaticPaths() {
+  const posts = await getPosts()
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }))
+}
+type Props = {
+  post: CollectionEntry<'posts'>
+}
+const { post } = Astro.props
+const { href } = Astro.url
+const { Content } = await post.render()
+const relatedPosts = await getRelatedPosts(post.data.relatedPosts)
+const isOlderThan2Years =
+  new Date(post.data.publishedAt).getTime() < new Date().getTime() - 63072000000
+const seo: HeadTagsProps['seo'] = {
+  publishedTime: post.data.publishedAt,
+  title: post.data.title,
+  type: 'article',
+  description: post.data.description,
+  image: 'imageCover',
+  url: href,
+}
+---
+
+<Layout {seo} translatedPostSlug={post.data.translated?.slug}>
+  <article
+    itemscope=""
+    itemtype="http://schema.org/Article"
+    class="post mx-auto flex w-full flex-col gap-8"
+  >
+    <header class="flex flex-col items-start" role="presentation">
+      {
+        isOlderThan2Years && (
+          <Alert color="warning" class="mb-4">
+            <Icon icon="clock" class="h-4 w-4" />
+            <span>{t('blog.olderPost')}</span>
+          </Alert>
+        )
+      }
+      <h1
+        itemprop="name"
+        class="text-2xl md:text-5xl font-bold leading-tight mb-8"
+        transition:name={`post-title-${post.slug}`}
+        transition:name={`post-title-home-${post.slug}`}
+      >
+        {post.data.title}
+      </h1>
+      <p class="italic">{post.data.description}</p>
+      <hr class="w-full border border-gray-200 dark:border-gray-800 my-4" />
+      <DatePost date={post.data.publishedAt} />
+      {
+        post.data.cover && (
+          <ImageBlur
+            itemprop="image"
+            class="mb-6 mt-6 aspect-video w-full rounded-lg md:mb-8"
+            src={post.data.cover as ImageMetadata}
+            alt={post.data.title}
+            width={600}
+            transitionName={`post-img-${post.slug}`}
+            loading="eager"
+          />
+        )
+      }
+    </header>
+
+    <Content />
+  </article>
+  {
+    relatedPosts && relatedPosts.length > 0 && (
+      <>
+        <div class="flex items-center">
+          <span class="italic text-slate-400 dark:text-slate-600">
+            {t('blog.moreRelatedPosts')}
+          </span>
+          <hr class="ml-4 flex-1 border-slate-400 dark:border-slate-600" />
+        </div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {relatedPosts.map((relatedPost) => (
+            <PostCard noTransition showDescription={false} post={relatedPost} />
+          ))}
+        </div>
+      </>
+    )
+  }
+</Layout>

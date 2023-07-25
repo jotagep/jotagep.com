@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = HTMLAttributes<'section'> & {
+  row?: boolean
+}
+
+const { class: extendClass, row = false, ...attributes } = Astro.props
+---
+
+<section
+  class:list={['flex', { 'flex-col gap-8': !row }, extendClass]}
+  {...attributes}
+>
+  <slot />
+</section>

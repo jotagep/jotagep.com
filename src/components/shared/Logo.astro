@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets'
+
+import logoImg from '@/assets/logo.png'
+
+import config from '@/data/config'
+
+import { getHomePath } from '@/utils/pathHelper'
+---
+
+<a href={getHomePath()} class="logo flex items-center">
+  <span class="lowercase dark:text-white italic font-semibold text-3xl"
+    >{config.logoTitle}</span
+  >
+  <Image src={logoImg} class="ml-2 w-12 dark:invert" alt="Logo" />
+</a>
+
+<style>
+  .logo {
+    font-family: 'Lato', sans-serif;
+    transition: all 0.3s ease;
+    will-change: transform;
+  }
+
+  @media screen(md) {
+    .logo:hover {
+      transform: scale(1.07);
+    }
+  }
+</style>

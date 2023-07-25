@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = HTMLAttributes<'div'> & {
+  size?: 'sm' | 'md' | 'lg' | 'xl'
+  color?: 'green' | 'orange' | 'red' | 'sky'
+}
+
+const { class: className, size = 'sm', color = 'sky', ...props } = Astro.props
+
+const sizeClasses = {
+  sm: 'h-3 w-3',
+  md: 'h-4 w-4',
+  lg: 'h-5 w-5',
+  xl: 'h-6 w-6',
+}
+
+const colorClasses = {
+  green: 'bg-green-500 dark:bg-green-400',
+  orange: 'bg-orange-400',
+  red: 'bg-red-500',
+  sky: 'bg-sky-500',
+}
+
+const colorClass = colorClasses[color]
+const sizeClass = sizeClasses[size]
+---
+
+<div
+  class:list={['relative flex rounded-full', sizeClass, colorClass]}
+  {...props}
+>
+  <span
+    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-inherit opacity-50"
+  ></span>
+</div>

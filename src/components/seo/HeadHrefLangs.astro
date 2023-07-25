@@ -1,0 +1,40 @@
+---
+import { localizeUrl } from 'astro-i18next'
+import i18next from 'i18next'
+
+const currentLanguage = i18next.language
+const supportedLanguages = i18next.languages
+
+const currentUrl = Astro.url.href
+
+export interface Props {
+  translatedPostSlug?: string
+}
+
+const { translatedPostSlug } = Astro.props
+const { slug } = Astro.params
+---
+
+{
+  supportedLanguages.map((supportedLanguage) => {
+    const isCurrentLanguage = supportedLanguage === currentLanguage
+    const url = isCurrentLanguage
+      ? currentUrl
+      : translatedPostSlug && slug
+      ? localizeUrl(currentUrl, supportedLanguage).replace(
+          slug,
+          translatedPostSlug,
+        )
+      : null
+
+    if (!url) return null
+
+    return (
+      <link
+        rel="alternate"
+        hreflang={supportedLanguage}
+        href={localizeUrl(url, supportedLanguage)}
+      />
+    )
+  })
+}

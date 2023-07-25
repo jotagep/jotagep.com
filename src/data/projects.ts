@@ -1,27 +1,34 @@
 export type Project = {
-  title: string;
-  techs: string[];
-  link: string;
-  isComingSoon?: boolean;
-};
+  title: string
+  description: string
+  techs: string[]
+  link: string
+  prize?: string
+  isComingSoon?: boolean
+}
 
 const projects: Project[] = [
   {
-    title: "Dictionary App",
-    techs: ["ReactJS (NextJS)", "react-query", "zod"],
-    link: "https://github.com/MaeWolff/dictionary-app",
+    title: 'RedFlix',
+    description:
+      'A Netflix clone built with React and Redux that allows you to discover popular movies',
+    techs: ['React', 'Typescript', 'Redux', 'Tailwind'],
+    link: 'https://github.com/jotagep/movies-redux-app',
   },
   {
-    title: "Portfolio / Lina BLIDI",
-    techs: ["ReactJS (NextJS)", "TypeScript"],
-    link: "https://www.linablidi.fr/",
+    title: 'Harmony Dapp Template',
+    description:
+      'Hackaton project: All-in-one forkable Harmony dev stack to build your dapp',
+    techs: ['React', 'TypeScript', 'Ethers', 'Solidity', 'Hardhat'],
+    link: 'https://github.com/jotagep/harmony-dapp-template',
+    prize: '5000$',
   },
   {
-    title: "Portfolio / Template",
-    techs: ["Astro"],
-    link: "/",
-    isComingSoon: true,
+    title: 'Jotagep portfolio',
+    description: 'My personal portfolio built with Astro',
+    techs: ['Astro', 'TypeScript'],
+    link: 'https://github.com/jotagep/jotagep.com',
   },
-];
+]
 
-export default projects;
+export default projects

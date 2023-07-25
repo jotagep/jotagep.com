@@ -1,61 +1,100 @@
 ---
-import { getCollection } from "astro:content";
+import { Image } from 'astro:assets'
+import { Trans } from 'astro-i18next/components'
+import { changeLanguage, t } from 'i18next'
 
-import Layout from "@/layouts/Layout.astro";
-import SocialLinks from "@/components/SocialLinks.astro";
-import PostCard from "@/components/PostCard.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
-import Link from "@/components/shared/Link.astro";
-import convertAsteriskToStrongTag from "@/utils/convertAsteriskToStrongTag";
+import JobCard from '@/components/JobCard.astro'
+import PostCard from '@/components/PostCard.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
+import Section from '@/components/Section.astro'
+import SectionCard from '@/components/SectionCard.astro'
+import SectionHeader from '@/components/SectionHeader.astro'
+import ImageBlur from '@/components/shared/ImageBlur.astro'
+import Link from '@/components/shared/Link.astro'
+import SocialLinks from '@/components/shared/SocialLinks.astro'
 
-import presentation from "@/data/presentation";
-import projects from "@/data/projects";
+import config from '@/data/config'
+import { currentsJobs } from '@/data/jobs'
+import projects from '@/data/projects'
 
-const posts = await getCollection("posts");
+import Layout from '@/layouts/Layout.astro'
+
+import { getPosts } from '@/lib/contentApi'
+
+import parseAsteriskToSpanTag from '@/utils/parseAsteriskToSpanTag'
+import { getBlogPath } from '@/utils/pathHelper'
+
+import contactImage from '../assets/home/contact.webp'
+import localImage from '../assets/home/jotagep.png'
+
+changeLanguage('en')
+
+const posts = await getPosts()
+const linkedInUrl = config.socials.find(
+  (social) => social.label === 'LinkedIn',
+).link
 ---
 
 <Layout>
-  <main class="flex flex-col gap-20">
-    <article class="flex flex-col gap-8">
-      <h1 class="text-3xl text-neutral-100">{presentation.title}</h1>
-      <h2
-        class="max-w-[60ch] leading-6"
-        set:html={convertAsteriskToStrongTag(presentation.description)}
+  <main class="flex flex-col gap-16 md:gap-20">
+    <Section row class="gap-8">
+      <div>
+        <h1 class="font-lato text-4xl dark:text-neutral-100 mb-8">
+          {t('home.title')}
+        </h1>
+        <h2
+          class="max-w-[60ch] text-xl leading-8"
+          set:html={parseAsteriskToSpanTag(t('home.description'))}
+        />
+        <SocialLinks class="hidden md:flex mt-12" icons />
+      </div>
+      <ImageBlur
+        class="hidden md:block flex-shrink-0 rounded-xl w-48 h-64"
+        src={localImage}
+        alt="Jota's profile picture"
+        width={192}
+        loading="eager"
+        transitionName="profile-home"
       />
-      <SocialLinks />
-    </article>
+    </Section>
 
-    <article class="flex flex-col gap-8">
-      <header class="flex w-full flex-row justify-between gap-2">
-        <h3 class="text-lg text-neutral-100">Latest posts</h3>
-        <Link href="/posts" label="See all posts" isUnderline target="_self" />
-      </header>
-      {posts.length === 0 && <p>Soon, stay connected 👀...</p>}
+    <Section>
+      <SectionHeader title={t('home.workingAt')} />
+      <div class="flex flex-col gap-4 md:flex-row md:flex-wrap">
+        {
+          currentsJobs.length !== 0 &&
+            currentsJobs.map((job) => <JobCard job={job} />)
+        }
+      </div>
+    </Section>
 
-      <section class="flex flex-col gap-4 md:flex-row md:flex-wrap">
+    <Section>
+      <SectionHeader
+        title={t('home.latestPosts')}
+        pageLink={{
+          href: getBlogPath(),
+          label: t('home.seeAllPosts'),
+        }}
+      />
+      {posts.length === 0 && <p>{t('home.noPosts')}</p>}
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         {
           posts.length !== 0 &&
-            posts
-              .slice(0, 2)
-              .map((post) => (
-                <PostCard
-                  publishedAt={post.data.publishedAt}
-                  title={post.data.title}
-                  description={post.data.description}
-                  slug={post.slug}
-                />
-              ))
+            posts.slice(0, 2).map((post) => <PostCard {post} />)
         }
-      </section>
-    </article>
+      </div>
+    </Section>
 
-    <article class="flex flex-col gap-8">
-      <header class="flex w-full flex-row justify-between gap-2">
-        <h3 class="text-lg text-neutral-100">
-          Selected projects ({projects.length})
-        </h3>
-      </header>
-      {projects.length === 0 && <p>Oops, I must work^^^^^</p>}
+    <Section>
+      <SectionHeader
+        title={t('home.selectedProjects')}
+        pageLink={{
+          href: 'https://github.com/jotagep',
+          label: t('home.viewMoreProjects'),
+        }}
+      />
+      {projects.length === 0 && <p>{t('home.noProjects')}</p>}
 
       <section class="flex flex-col gap-4">
         {
@@ -63,20 +102,24 @@ const posts = await getCollection("posts");
             projects.map((project) => <ProjectCard {...project} />)
         }
       </section>
-    </article>
+    </Section>
 
-    <article class="flex flex-col gap-8">
-      <header class="flex w-full flex-row justify-between gap-2">
-        <h3 class="text-lg text-neutral-100">Get in touch</h3>
-      </header>
-      <p>
-        Email me at <Link
-          href={`mailto:${presentation.mail}`}
-          label={presentation.mail}
-        /> or follow me via my social links.
+    <SectionCard>
+      <SectionHeader title={t('home.getInTouch.title')} center />
+      <p class="text-center text-lg">
+        <Trans i18nKey="home.getInTouch.description">
+          If you have any questions or want to contact me, do not hesitate to
+          send me an <Link
+            color="indigo"
+            href={`mailto:${config.mail}`}
+            label={config.mail}
+          >
+            email
+          </Link> or contact me through
+          <Link color="blue" href={linkedInUrl} label="LinkedIn">LinkedIn</Link>
+        </Trans>
       </p>
-
-      <SocialLinks />
-    </article>
+      <Image class="w-3/4 md:w-1/3" src={contactImage} alt="contact image" />
+    </SectionCard>
   </main>
 </Layout>
