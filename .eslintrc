@@ -65,7 +65,7 @@
       "rules": {
         "import/first": "off"
       }
-    },
+    }
   ],
   "ignorePatterns": [
     ".astro/",

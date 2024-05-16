@@ -1,5 +1,5 @@
 {  
   "*.{ts,tsx,astro}": [
-    "yarn care"
+    "npm run care"
   ]
 }
