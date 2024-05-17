@@ -1,6 +1,4 @@
 ---
-import i18next from 'i18next'
-
 import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
 import HeadTags, {
@@ -10,12 +8,13 @@ import BlurCircle from '@/components/shared/BlurCircle.astro'
 
 import theme from '@/data/theme'
 
+import type { Language } from '@/i18n/ui'
+
 import '@fontsource/open-sans'
 
 import '@fontsource/lato/700.css'
 import '@fontsource/lato/700-italic.css'
 import '@/styles/tailwind.css'
-import '@/styles/post.css'
 import 'tippy.js/dist/tippy.css'
 
 export interface Props {
@@ -24,10 +23,12 @@ export interface Props {
 }
 
 const { seo = {}, translatedPostSlug } = Astro.props
+
+const lang = Astro.currentLocale as Language
 ---
 
-<!DOCTYPE html>
-<html lang={i18next.language}>
+<!doctype html>
+<html lang={lang}>
   <HeadTags {seo} {translatedPostSlug} />
 
   <body

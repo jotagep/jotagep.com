@@ -1,0 +1,42 @@
+{
+  "site": {
+    "title": "My awesome website!",
+    "description": "Here is the description of my awesome website!"
+  },
+  "common": {
+    "date": "Date",
+    "more": "More"
+  },
+  "home": {
+    "title": "Hi, I’m Jotagep 👋",
+    "description": "Spanish *frontend developer* with over *5 years* launching projects. Focused on *tooling* and *web performance*",
+    "latestPosts": "Latest posts",
+    "noPosts": "Soon, stay connected 👀...",
+    "selectedProjects": "Selected projects",
+    "noProjects": "Oops, I must work^^^^^",
+    "getInTouch": {
+      "title": "Get in touch",
+      "description": "If you have any questions or want to contact me, do not hesitate to send me an <0>email</0> or contact me through <1>LinkedIn</1>"
+    },
+    "seeAllPosts": "See all posts",
+    "viewMoreProjects": "View more projects",
+    "workingAt": "Currently working at"
+  },
+  "job": {
+    "fullTime": "Full time. 40h/week",
+    "partTime": "Part time. Max 20h/week"
+  },
+  "navigation": {
+    "about": "About",
+    "blog": "Blog",
+    "home": "Home"
+  },
+  "blog": {
+    "title": "Blog",
+    "moreRelatedPosts": "More related posts",
+    "olderPost": "This article is more than 2 years old"
+  },
+  "error": {
+    "404": "Oops, this page does not exist"
+  }
+}

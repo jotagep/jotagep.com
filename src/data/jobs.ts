@@ -1,4 +1,5 @@
-import { t } from 'i18next'
+import type { Language } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/utils'
 
 import logoRedpoints from '../assets/jobs/redpoints.png'
 import logoSoluble from '../assets/jobs/soluble.png'
@@ -57,7 +58,11 @@ export const COLOR_BY_STATUS: Record<JobStatus, JobColor> = {
   'part-time': 'orange',
 }
 
-export const TEXT_BY_STATUS: Record<JobStatus, string> = {
-  'full-time': t('job.fullTime'),
-  'part-time': t('job.partTime'),
+export const getTextByStatus = (lang: Language) => {
+  const t = useTranslations(lang)
+
+  return {
+    'full-time': t('job.fullTime'),
+    'part-time': t('job.partTime'),
+  }
 }

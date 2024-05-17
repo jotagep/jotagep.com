@@ -2,23 +2,33 @@
 import config from '@/data/config'
 import { TAGS } from '@/data/tags'
 
+import { localesWithoutDefault } from '@/i18n/ui'
+
 import { getPostsByTag } from '@/lib/contentApi'
 
 import TagPage from '@/_pages/blog/tag/page.astro'
 
 export async function getStaticPaths({ paginate }) {
+  const tagsByLocale = localesWithoutDefault.flatMap((locale) =>
+    TAGS.map((tag) => ({
+      locale,
+      tag,
+    })),
+  )
+
   const postsByTag = await Promise.all(
-    TAGS.flatMap(async (item) => {
-      const posts = await getPostsByTag(item.slug)
+    tagsByLocale.flatMap(async (item) => {
+      const posts = await getPostsByTag(item.tag.slug, item.locale)
       return {
-        tag: item,
+        locale: item.locale,
+        tag: item.tag,
         posts,
       }
     }),
   )
   return postsByTag.flatMap((item) =>
     paginate(item.posts, {
-      params: { tag: item.tag.slug },
+      params: { tag: item.tag.slug, lang: item.locale },
       props: { tag: item.tag },
       pageSize: config.postPerPage,
     }),

@@ -1,25 +1,19 @@
 import { defineConfig } from 'astro/config'
-import astroI18next from 'astro-i18next'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 
 import config from './src/data/config'
-
-const langCodes = {
-  en: 'en-US',
-  es: 'es-ES',
-}
+import { defaultLang, langCodes, locales } from "./src/i18n/ui";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    astroI18next(),
     tailwind(),
     sitemap({
       i18n: {
-        defaultLocale: 'en',
+        defaultLocale: defaultLang,
         locales: langCodes,
       },
       changefreq: 'weekly',
@@ -45,6 +39,10 @@ export default defineConfig({
     mdx(),
     react(),
   ],
+  i18n: {
+    defaultLocale: defaultLang,
+    locales: locales,
+  },
   site: config.siteUrl,
   markdown: {
     syntaxHighlight: 'shiki',

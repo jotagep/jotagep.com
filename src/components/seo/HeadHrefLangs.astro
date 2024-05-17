@@ -1,9 +1,9 @@
 ---
-import { localizeUrl } from 'astro-i18next'
-import i18next from 'i18next'
+import { getAbsoluteLocaleUrl } from 'astro:i18n'
 
-const currentLanguage = i18next.language
-const supportedLanguages = i18next.languages
+import { type Language, locales } from '@/i18n/ui'
+
+const currentLanguage = Astro.currentLocale as Language
 
 const currentUrl = Astro.url.href
 
@@ -16,16 +16,16 @@ const { slug } = Astro.params
 ---
 
 {
-  supportedLanguages.map((supportedLanguage) => {
+  locales.map((supportedLanguage) => {
     const isCurrentLanguage = supportedLanguage === currentLanguage
     const url = isCurrentLanguage
       ? currentUrl
       : translatedPostSlug && slug
-      ? localizeUrl(currentUrl, supportedLanguage).replace(
-          slug,
-          translatedPostSlug,
-        )
-      : null
+        ? getAbsoluteLocaleUrl(supportedLanguage, currentUrl).replace(
+            slug,
+            translatedPostSlug,
+          )
+        : null
 
     if (!url) return null
 
@@ -33,7 +33,7 @@ const { slug } = Astro.params
       <link
         rel="alternate"
         hreflang={supportedLanguage}
-        href={localizeUrl(url, supportedLanguage)}
+        href={getAbsoluteLocaleUrl(supportedLanguage, url)}
       />
     )
   })

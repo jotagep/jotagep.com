@@ -1,7 +1,6 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
-declare module 'astro-i18next'
 declare module 'uniqid'
 declare module 'locale-emoji'
 interface Page<T = any> {
@@ -29,3 +28,8 @@ interface Page<T = any> {
     next: string | undefined
   }
 }
+type NestedKeys<T> = {
+  [K in keyof T & (string | number)]: T[K] extends object
+    ? `${K}.${NestedKeys<T[K]>}`
+    : `${K}`
+}[keyof T & (string | number)]

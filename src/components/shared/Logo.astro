@@ -5,10 +5,14 @@ import logoImg from '@/assets/logo.png'
 
 import config from '@/data/config'
 
+import type { Language } from '@/i18n/ui'
+
 import { getHomePath } from '@/utils/pathHelper'
+
+const lang = Astro.currentLocale as Language
 ---
 
-<a href={getHomePath()} class="logo flex items-center">
+<a href={getHomePath(lang)} class="logo flex items-center">
   <span class="lowercase dark:text-white italic font-semibold text-3xl"
     >{config.logoTitle}</span
   >

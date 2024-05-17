@@ -1,8 +1,10 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
-import { t } from 'i18next'
 
 import Link from '@/components/shared/Link.astro'
+
+import type { Language } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/utils'
 
 interface Props extends HTMLAttributes<'header'> {
   center?: boolean
@@ -12,6 +14,9 @@ interface Props extends HTMLAttributes<'header'> {
     label: string
   }
 }
+
+const lang = Astro.currentLocale as Language
+const t = useTranslations(lang)
 
 const {
   center = false,

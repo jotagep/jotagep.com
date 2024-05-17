@@ -1,0 +1,30 @@
+---
+import config from '@/data/config'
+
+import { localesWithoutDefault } from '@/i18n/ui'
+
+import { getPosts } from '@/lib/contentApi'
+
+import PageBlog from '@/_pages/blog/page.astro'
+
+export async function getStaticPaths({ paginate }) {
+  const postsByLocale = await Promise.all(
+    localesWithoutDefault.flatMap(async (locale) => {
+      const posts = await getPosts(locale)
+      return {
+        locale,
+        posts,
+      }
+    }),
+  )
+
+  return postsByLocale.flatMap((item) =>
+    paginate(item.posts, {
+      params: { lang: item.locale },
+      pageSize: config.postPerPage,
+    }),
+  )
+}
+---
+
+<PageBlog {...Astro.props as any} />

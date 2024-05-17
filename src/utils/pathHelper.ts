@@ -1,15 +1,17 @@
-import { localizePath } from 'astro-i18next'
+import { getRelativeLocaleUrl } from 'astro:i18n'
 
 import { ROUTES } from '@/data/config'
 
-export const getHomePath = () => {
-  return localizePath(ROUTES.HOME)
+import { defaultLang, type Language } from '@/i18n/ui'
+
+export const getHomePath = (lang: Language = defaultLang) => {
+  return getRelativeLocaleUrl(lang, ROUTES.HOME)
 }
 
-export const getBlogPath = (slug = '') => {
-  return localizePath(`${ROUTES.BLOG}/${slug}`).replace(/\/$/, '')
+export const getBlogPath = (lang: Language = defaultLang, slug = '') => {
+  return getRelativeLocaleUrl(lang, `${ROUTES.BLOG}/${slug}`).replace(/\/$/, '')
 }
 
-export const getTagPath = (tag = '') => {
-  return localizePath(`${ROUTES.TAG}/${tag}`).replace(/\/$/, '')
+export const getTagPath = (lang: Language = defaultLang, tag = '') => {
+  return getRelativeLocaleUrl(lang, `${ROUTES.TAG}/${tag}`).replace(/\/$/, '')
 }

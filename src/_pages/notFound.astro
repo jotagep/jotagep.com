@@ -1,9 +1,11 @@
 ---
-import { changeLanguage, t } from 'i18next'
+import type { Language } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/utils'
 
 import Layout from '@/layouts/Layout.astro'
 
-changeLanguage('es')
+const lang = Astro.currentLocale as Language
+const t = useTranslations(lang)
 
 const { pathname } = Astro.url
 const errorGif = 'https://media0.giphy.com/media/3o7aCTPPm4OHfRLSH6/giphy.gif'

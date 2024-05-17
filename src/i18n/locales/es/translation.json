@@ -1,0 +1,42 @@
+{
+  "site": {
+    "title": "Mi web personal",
+    "description": "Aquí está la descripción de mi web personal"
+  },
+  "common": {
+    "date": "Fecha",
+    "more": "Más"
+  },
+  "home": {
+    "title": "Hola, Soy Jotagep 👋",
+    "description": "Soy un *frontend developer* con más de *5 años* de experiencia lanzando proyectos. Especializado en *tooling* y el *rendimiento web*.",
+    "latestPosts": "Últimos posts",
+    "noPosts": "Estamos trabajando en ello 👀...",
+    "selectedProjects": "Proyectos destacados",
+    "noProjects": "Oops, debo trabajar más^^^^^",
+    "getInTouch": {
+      "title": "¿Hablamos?",
+      "description": "Si tienes alguna pregunta o quieres contactar conmigo, no dudes en enviarme un <0>email</0> o contactarme a través de <1>LinkedIn</1>."
+    },
+    "seeAllPosts": "Ver todos los posts",
+    "viewMoreProjects": "Ver más proyectos",
+    "workingAt": "Actualmente trabajando en"
+  },
+  "job": {
+    "fullTime": "Tiempo completo. 40h/semana",
+    "partTime": "Tiempo parcial. Max 20h/semana"
+  },
+  "navigation": {
+    "about": "Sobre mi",
+    "blog": "Blog",
+    "home": "Inicio"
+  },
+  "blog": {
+    "title": "Blog",
+    "moreRelatedPosts": "Más posts relacionados",
+    "olderPost": "Este artículo tiene más de 2 años"
+  },
+  "error": {
+    "404": "Oops, esta página no existe"
+  }
+}

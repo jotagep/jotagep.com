@@ -1,6 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 
+import type { Language } from '@/i18n/ui'
+
 import { getBlogPath } from '@/utils/pathHelper'
 
 import DatePost from './shared/DatePost.astro'
@@ -16,12 +18,14 @@ const { noTransition, post, showDescription = true } = Astro.props
 const { cover, title, publishedAt, description } = post.data
 
 const transitionName = noTransition ? undefined : `post-img-${post.slug}`
+
+const lang = Astro.currentLocale as Language
 ---
 
 <article class="relative overflow-hidden flex flex-col gap-2 card">
   <a
     aria-label={title}
-    href={getBlogPath(post.slug)}
+    href={getBlogPath(lang, post.slug)}
     class="absolute inset-0 z-10"></a>
   {
     cover && (

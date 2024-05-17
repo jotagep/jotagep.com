@@ -1,9 +1,10 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
-import { localizePath } from 'astro-i18next'
-import i18next from 'i18next'
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import ISO6991 from 'iso-639-1'
 import localeEmoji from 'locale-emoji'
+
+import { locales } from '@/i18n/ui'
 
 interface LanguageMapping {
   [localeCode: string]: string
@@ -15,8 +16,7 @@ export interface Props extends HTMLAttributes<'select'> {
   translatedPostSlug?: string
 }
 
-const supportedLanguages = i18next.languages
-const currentLanguage = i18next.language
+const currentLanguage = Astro.currentLocale
 
 const { pathname } = Astro.url
 const { translatedPostSlug } = Astro.props
@@ -44,10 +44,12 @@ const {
   {...attributes}
 >
   {
-    supportedLanguages.map((supportedLanguage: string) => {
+    locales.map((supportedLanguage: string) => {
       const isCurrentLanguage = supportedLanguage === currentLanguage
-      const path = isCurrentLanguage ? pathname : translatedPath
-      let value = localizePath(path, supportedLanguage)
+      const path = isCurrentLanguage
+        ? pathname
+        : translatedPath.replace(`/${currentLanguage}`, '')
+      let value = getRelativeLocaleUrl(supportedLanguage, path)
       const flag = showFlag ? localeEmoji(supportedLanguage) + ' ' : ''
 
       let nativeName = ''

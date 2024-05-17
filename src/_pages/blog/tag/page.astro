@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
+
+import type { Tag } from '@/data/tags'
+
+import BlogLayout from '@/layouts/BlogLayout.astro'
+
+interface Props {
+  page: Page<CollectionEntry<'posts'>>
+  tag: Tag
+}
+const { page, tag } = Astro.props
+const seo: HeadTagsProps['seo'] = {
+  title: `${tag.label} - All Posts`,
+}
+---
+
+<BlogLayout {page} {seo} />

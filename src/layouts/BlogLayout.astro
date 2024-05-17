@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { t } from 'i18next'
 
 import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
 import Badge from '@/components/shared/Badge/Badge.astro'
@@ -9,6 +8,9 @@ import ImageBlur from '@/components/shared/ImageBlur.astro'
 import Paginator from '@/components/shared/Paginator.astro'
 
 import { type Tag, TAGS } from '@/data/tags'
+
+import type { Language } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/utils'
 
 import Layout from '@/layouts/Layout.astro'
 
@@ -19,6 +21,8 @@ interface Props {
   seo?: HeadTagsProps['seo']
 }
 
+const lang = Astro.currentLocale as Language
+const t = useTranslations(lang)
 const { page, seo = {} } = Astro.props
 const { tag: tagParam = '' } = Astro.params
 
@@ -44,7 +48,7 @@ const posts = page.data
       {
         Tags.map((tag) => (
           <li>
-            <a href={tag.slug ? getTagPath(tag.slug) : getBlogPath()}>
+            <a href={tag.slug ? getTagPath(lang, tag.slug) : getBlogPath(lang)}>
               <Badge
                 active={tagParam === tag.slug}
                 class="text-sm"
@@ -64,7 +68,7 @@ const posts = page.data
           <article class="group relative flex max-h-40 w-full gap-2 border-t border-gray-300 py-4 transition-colors duration-300 hover:bg-gray-200 dark:border-gray-800 dark:hover:bg-gray-800 md:px-2 md:py-6">
             <a
               aria-label={post.data.title}
-              href={getBlogPath(post.slug)}
+              href={getBlogPath(lang, post.slug)}
               class="absolute inset-0 z-10"
             />
             {post.data.cover && (

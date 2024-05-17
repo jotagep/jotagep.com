@@ -1,21 +1,5 @@
 ---
-import { changeLanguage, t } from 'i18next'
-
-import Layout from '@/layouts/Layout.astro'
-
-changeLanguage('en')
-
-const { pathname } = Astro.url
-const errorGif = 'https://media0.giphy.com/media/3o7aCTPPm4OHfRLSH6/giphy.gif'
+import ErrorPage from '@/_pages/notFound.astro'
 ---
 
-<Layout>
-  <main class="flex flex-col gap-16 md:gap-20">
-    <div class="flex flex-col items-center flex-1">
-      <span class="post text-2xl mb-8"
-        >{t('error.404')}: <code>{pathname}</code></span
-      >
-      <img class="w-3/4 shadow-lg rounded-lg" src={errorGif} />
-    </div>
-  </main>
-</Layout>
+<ErrorPage />

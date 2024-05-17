@@ -1,0 +1,15 @@
+---
+import { localesWithoutDefault } from '@/i18n/ui'
+
+import IndexPage from '@/_pages/index.astro'
+
+export const getStaticPaths = () => {
+  return localesWithoutDefault.map((lang) => ({
+    params: {
+      lang,
+    },
+  }))
+}
+---
+
+<IndexPage />

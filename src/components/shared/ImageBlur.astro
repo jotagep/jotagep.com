@@ -47,7 +47,9 @@ if (props.src && !hasCustomHeight) {
     height: 100%;
     filter: blur(10px);
     transform: scale(1.1);
-    transition: filter 0.6s, transform 0.6s;
+    transition:
+      filter 0.6s,
+      transform 0.6s;
   }
   .image-blur img:global(.loaded) + img {
     opacity: 0;

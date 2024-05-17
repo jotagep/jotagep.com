@@ -1,23 +1,10 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { changeLanguage } from 'i18next'
 
 import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
 
-import config from '@/data/config'
-
 import BlogLayout from '@/layouts/BlogLayout.astro'
 
-import { getPosts } from '@/lib/contentApi'
-
-changeLanguage('es')
-
-export async function getStaticPaths({ paginate }) {
-  const posts = await getPosts()
-  return paginate(posts, {
-    pageSize: config.postPerPage,
-  })
-}
 interface Props {
   page: Page<CollectionEntry<'posts'>>
 }

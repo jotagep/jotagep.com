@@ -5,13 +5,20 @@ import Pulse from '@/components/shared/Pulse.astro'
 import Tooltip from '@/components/shared/Tooltip/Tooltip.astro'
 
 import type { Job } from '@/data/jobs'
-import { COLOR_BY_STATUS, TEXT_BY_STATUS } from '@/data/jobs'
+import { COLOR_BY_STATUS, getTextByStatus } from '@/data/jobs'
+
+import type { Language } from '@/i18n/ui'
 
 type Props = {
   job: Job
 }
 
 const { job } = Astro.props
+
+const lang = Astro.currentLocale as Language
+
+const colorByStatus = COLOR_BY_STATUS[job.status]
+const textByStatus = getTextByStatus(lang)[job.status]
 ---
 
 <a
@@ -36,8 +43,8 @@ const { job } = Astro.props
     </div>
   </div>
   <div class="flex justify-center w-4">
-    <Tooltip content={TEXT_BY_STATUS[job.status]}>
-      <Pulse color={COLOR_BY_STATUS[job.status]} />
+    <Tooltip content={textByStatus}>
+      <Pulse color={colorByStatus} />
     </Tooltip>
   </div>
 </a>

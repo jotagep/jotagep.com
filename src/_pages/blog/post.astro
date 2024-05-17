@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { changeLanguage, t } from 'i18next'
 
 import PostCard from '@/components/PostCard.astro'
 import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
@@ -9,24 +8,23 @@ import DatePost from '@/components/shared/DatePost.astro'
 import Icon from '@/components/shared/Icon.astro'
 import ImageBlur from '@/components/shared/ImageBlur.astro'
 
+import type { Language } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/utils'
+
 import Layout from '@/layouts/Layout.astro'
 
-import { getPosts, getRelatedPosts } from '@/lib/contentApi'
+import { getRelatedPosts } from '@/lib/contentApi'
 
-changeLanguage('es')
+const lang = Astro.currentLocale as Language
 
-export async function getStaticPaths() {
-  const posts = await getPosts()
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }))
-}
 type Props = {
   post: CollectionEntry<'posts'>
 }
+
+const t = useTranslations(lang)
 const { post } = Astro.props
 const { href } = Astro.url
+
 const { Content } = await post.render()
 const relatedPosts = await getRelatedPosts(post.data.relatedPosts)
 const isOlderThan2Years =

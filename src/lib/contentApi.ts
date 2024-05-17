@@ -1,14 +1,11 @@
 import { getCollection, getEntries } from 'astro:content'
-import i18next from 'i18next'
 
-export const getPosts = async () => {
-  const currentLanguage = i18next.language
+import { defaultLang, type Language } from '@/i18n/ui'
 
+export const getPosts = async (lang: Language = defaultLang) => {
   const posts = await getCollection('posts', ({ id, data }) => {
     const isDev = process.env.NODE_ENV !== 'production'
-    return (
-      id.startsWith(`${currentLanguage}/`) && (data.isDraft === false || isDev)
-    )
+    return id.startsWith(`${lang}/`) && (data.isDraft === false || isDev)
   })
   const sortedPosts = posts.sort((a, b) => {
     return (
@@ -19,8 +16,11 @@ export const getPosts = async () => {
   return sortedPosts
 }
 
-export const getPostsByTag = async (tag: string) => {
-  const posts = await getPosts()
+export const getPostsByTag = async (
+  tag: string,
+  lang: Language = defaultLang,
+) => {
+  const posts = await getPosts(lang)
   return posts.filter((post) => post.data.tags?.includes(tag))
 }
 

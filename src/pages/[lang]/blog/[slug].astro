@@ -1,0 +1,28 @@
+---
+import { localesWithoutDefault } from '@/i18n/ui'
+
+import { getPosts } from '@/lib/contentApi'
+
+import PostPage from '@/_pages/blog/post.astro'
+
+export async function getStaticPaths() {
+  const postsByLocale = await Promise.all(
+    localesWithoutDefault.flatMap(async (locale) => {
+      const posts = await getPosts(locale)
+      return {
+        locale,
+        posts,
+      }
+    }),
+  )
+
+  return postsByLocale.flatMap((item) =>
+    item.posts.map((post) => ({
+      params: { slug: post.slug, lang: item.locale },
+      props: { post },
+    })),
+  )
+}
+---
+
+<PostPage {...Astro.props as any} />

@@ -1,16 +1,9 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-import { changeLanguage } from 'i18next'
-
-import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
-
 import config from '@/data/config'
-
-import BlogLayout from '@/layouts/BlogLayout.astro'
 
 import { getPosts } from '@/lib/contentApi'
 
-changeLanguage('en')
+import PageBlog from '@/_pages/blog/page.astro'
 
 export async function getStaticPaths({ paginate }) {
   const posts = await getPosts()
@@ -18,13 +11,6 @@ export async function getStaticPaths({ paginate }) {
     pageSize: config.postPerPage,
   })
 }
-interface Props {
-  page: Page<CollectionEntry<'posts'>>
-}
-const { page } = Astro.props
-const seo: HeadTagsProps['seo'] = {
-  title: 'Template - All Posts',
-}
 ---
 
-<BlogLayout {page} {seo} />
+<PageBlog {...Astro.props as any} />

@@ -1,0 +1,15 @@
+---
+import { localesWithoutDefault } from '@/i18n/ui'
+
+import NotFoundPage from '@/_pages/notFound.astro'
+
+export const getStaticPaths = () => {
+  return localesWithoutDefault.map((lang) => ({
+    params: {
+      lang,
+    },
+  }))
+}
+---
+
+<NotFoundPage />
