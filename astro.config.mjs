@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 
 import config from './src/data/config'
-import { defaultLang, langCodes, locales } from "./src/i18n/ui";
+import { defaultLang, langCodes, locales } from './src/i18n/ui'
 
 // https://astro.build/config
 export default defineConfig({
@@ -43,7 +43,10 @@ export default defineConfig({
     defaultLocale: defaultLang,
     locales: locales,
   },
-  site: config.siteUrl,
+  site:
+    process.env.NODE_ENV === 'production'
+      ? config.siteUrl
+      : 'http://localhost:4321',
   markdown: {
     syntaxHighlight: 'shiki',
     shikiConfig: {

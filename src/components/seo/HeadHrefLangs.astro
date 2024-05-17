@@ -6,6 +6,7 @@ import { type Language, locales } from '@/i18n/ui'
 const currentLanguage = Astro.currentLocale as Language
 
 const currentUrl = Astro.url.href
+const currentPath = Astro.url.pathname
 
 export interface Props {
   translatedPostSlug?: string
@@ -21,20 +22,17 @@ const { slug } = Astro.params
     const url = isCurrentLanguage
       ? currentUrl
       : translatedPostSlug && slug
-        ? getAbsoluteLocaleUrl(supportedLanguage, currentUrl).replace(
+        ? getAbsoluteLocaleUrl(supportedLanguage, currentPath).replace(
             slug,
             translatedPostSlug,
           )
-        : null
+        : getAbsoluteLocaleUrl(
+            supportedLanguage,
+            currentPath.replace(`/${currentLanguage}`, ''),
+          )
 
     if (!url) return null
 
-    return (
-      <link
-        rel="alternate"
-        hreflang={supportedLanguage}
-        href={getAbsoluteLocaleUrl(supportedLanguage, url)}
-      />
-    )
+    return <link rel="alternate" hreflang={supportedLanguage} href={url} />
   })
 }

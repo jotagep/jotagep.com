@@ -5,7 +5,7 @@ import { SEO } from 'astro-seo'
 
 import config from '@/data/config'
 
-//import HeadHrefLangs from './HeadHrefLangs.astro'
+import HeadHrefLangs from './HeadHrefLangs.astro'
 
 export type Props = {
   seo: {
@@ -20,10 +20,7 @@ export type Props = {
   translatedPostSlug?: string
 }
 
-const {
-  seo,
-  //translatedPostSlug
-} = Astro.props
+const { seo, translatedPostSlug } = Astro.props
 
 const {
   title,
@@ -159,7 +156,7 @@ const openGraph = {
       ],
     }}
   />
-  <!-- <HeadHrefLangs {translatedPostSlug} /> -->
+  <HeadHrefLangs {translatedPostSlug} />
   <ViewTransitions />
   <script>
     document.addEventListener('astro:page-load', () => {
