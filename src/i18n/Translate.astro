@@ -2,10 +2,10 @@
 import type { Language, LanguageKeys } from './ui'
 import { useTranslations } from './utils'
 
-interface Props {
-  as?: string
+interface Props<T extends keyof HTMLElementTagNameMap = 'div'> {
+  as?: T
   i18nKey: LanguageKeys
-  [key: string]: any
+  [key: string]: unknown
 }
 
 const { as: Tag = 'div', i18nKey, ...props } = Astro.props as Props
