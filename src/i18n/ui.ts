@@ -13,6 +13,8 @@ export const langCodes = {
 
 export type Language = keyof typeof languages
 
+export type LanguageKeys = NestedKeys<(typeof ui)[typeof defaultLang]>
+
 export const locales = Object.keys(languages) as Array<Language>
 
 export const localesWithoutDefault = locales.slice(1)

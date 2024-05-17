@@ -8,13 +8,14 @@ import Section from '@/components/Section.astro'
 import SectionCard from '@/components/SectionCard.astro'
 import SectionHeader from '@/components/SectionHeader.astro'
 import ImageBlur from '@/components/shared/ImageBlur.astro'
-// import Link from '@/components/shared/Link.astro'
+import Link from '@/components/shared/Link.astro'
 import SocialLinks from '@/components/shared/SocialLinks.astro'
 
-//import config from '@/data/config'
+import config from '@/data/config'
 import { currentsJobs } from '@/data/jobs'
 import projects from '@/data/projects'
 
+import Translate from '@/i18n/Translate.astro'
 import type { Language } from '@/i18n/ui'
 import { useTranslations } from '@/i18n/utils'
 
@@ -31,9 +32,9 @@ import localImage from '../assets/home/jotagep.png'
 const lang = Astro.currentLocale as Language
 
 const posts = await getPosts(lang)
-// const linkedInUrl = config.socials.find(
-//   (social) => social.label === 'LinkedIn',
-// ).link
+const linkedInUrl = config.socials.find(
+  (social) => social.label === 'LinkedIn',
+).link
 
 const t = useTranslations(lang)
 ---
@@ -110,17 +111,20 @@ const t = useTranslations(lang)
     <SectionCard>
       <SectionHeader title={t('home.getInTouch.title')} center />
       <p class="text-center text-lg">
-        <!-- <Trans i18nKey="home.getInTouch.description">
+        <Translate i18nKey="home.getInTouch.description">
           If you have any questions or want to contact me, do not hesitate to
           send me an <Link
             color="indigo"
             href={`mailto:${config.mail}`}
             label={config.mail}
+            slot="email"
           >
             email
           </Link> or contact me through
-          <Link color="blue" href={linkedInUrl} label="LinkedIn">LinkedIn</Link>
-        </Trans> -->
+          <Link color="blue" href={linkedInUrl} label="LinkedIn" slot="linkedin"
+            >LinkedIn</Link
+          >
+        </Translate>
       </p>
       <Image class="w-3/4 md:w-1/3" src={contactImage} alt="contact image" />
     </SectionCard>

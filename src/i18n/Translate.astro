@@ -1,0 +1,27 @@
+---
+import type { Language, LanguageKeys } from './ui'
+import { useTranslations } from './utils'
+
+interface Props {
+  as?: string
+  i18nKey: LanguageKeys
+  [key: string]: any
+}
+
+const { as: Tag = 'div', i18nKey, ...props } = Astro.props as Props
+
+const params = {}
+await Promise.all(
+  Object.keys(Astro.slots).map(async (slotName) => {
+    if (slotName === 'default') return
+    params[slotName] = await Astro.slots.render(slotName)
+  }),
+)
+
+const lang = Astro.currentLocale as Language
+
+const t = useTranslations(lang)
+const translation = t(i18nKey, params)
+---
+
+<Tag {...props} set:html={translation} />
