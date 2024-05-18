@@ -16,7 +16,7 @@
     "noProjects": "Oops, debo trabajar más^^^^^",
     "getInTouch": {
       "title": "¿Hablamos?",
-      "description": "Si tienes alguna pregunta o quieres contactar conmigo, no dudes en enviarme un <0>email</0> o contactarme a través de <1>LinkedIn</1>."
+      "description": "Si tienes alguna pregunta o quieres contactar conmigo, no dudes en enviarme un {email} o contactarme a través de {linkedin}."
     },
     "seeAllPosts": "Ver todos los posts",
     "viewMoreProjects": "Ver más proyectos",
