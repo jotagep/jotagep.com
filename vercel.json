@@ -1,0 +1,14 @@
+{
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.jotagep.com"
+        }
+      ],
+      "destination": "/blog/:path*"
+    }
+  ]
+}
