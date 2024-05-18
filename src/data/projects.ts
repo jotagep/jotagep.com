@@ -9,11 +9,11 @@ export type Project = {
 
 const projects: Project[] = [
   {
-    title: 'RedFlix',
+    title: 'VerFlix',
     description:
-      'A Netflix clone built with React and Redux that allows you to discover popular movies',
-    techs: ['React', 'Typescript', 'Redux', 'Tailwind'],
-    link: 'https://github.com/jotagep/movies-redux-app',
+      'A Netflix clone built with Next, Redux and Redis to cache data that allows you to discover popular movies using TMDB API.',
+    techs: ['Next', 'Typescript', 'Redux', 'Tailwind', 'Redis'],
+    link: 'https://github.com/jotagep/next-redis-movies-app',
   },
   {
     title: 'Harmony Dapp Template',
