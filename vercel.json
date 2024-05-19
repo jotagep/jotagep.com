@@ -1,6 +1,16 @@
 {
   "rewrites": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.jotagep.com"
+        }
+      ],
+      "destination": "/blog"
+    },
+    {
       "source": "/:path*",
       "has": [
         {
@@ -9,6 +19,26 @@
         }
       ],
       "destination": "/blog/:path*"
+    },
+    {
+      "source": "/:locale/",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.jotagep.com"
+        }
+      ],
+      "destination": "/:locale/blog"
+    },
+    {
+      "source": "/:locale/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.jotagep.com"
+        }
+      ],
+      "destination": "/:locale/blog/:path*"
     }
   ]
 }
