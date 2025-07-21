@@ -36,7 +36,7 @@ export const jobs: Job[] = [
     status: 'part-time',
     company: 'Spellborne (MonStudios)',
     logo: logoSpellborne,
-    url: 'https://store.epicgames.com/en-US/p/spellborne-ac6e3e',
+    url: 'https://www.spellborne.gg/',
     from: new Date('2022-02-02'),
   },
   {
