@@ -19,7 +19,11 @@ const { class: className, icons = false, separator = '•' } = Astro.props
       <li class="inline-flex items-center">
         {icons ? (
           <a href={social.link} class="cursor-pointer">
-            <Icon class="cursor-pointer" icon={social.icon} size="28px" />
+            <Icon
+              class="cursor-pointer"
+              icon={social.icon}
+              size={social.icon === 'twitter-logo' ? '24px' : '28px'}
+            />
           </a>
         ) : (
           <Link href={social.link} label={social.label}>
