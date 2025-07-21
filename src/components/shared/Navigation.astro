@@ -29,7 +29,8 @@ if (pathname.startsWith(ROUTES.TAG)) {
             href={item.href}
             class:list={{
               ['hover:text-black dark:hover:text-neutral-100']: true,
-              ['font-bold dark:text-neutral-100']: pathname === item.href,
+              ['font-bold dark:text-neutral-100']:
+                pathname === removeTrailingSlash(item.href),
             }}
           >
             {item.label}
