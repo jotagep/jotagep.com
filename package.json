@@ -1,5 +1,5 @@
 {
-  "name": "jotagep-site",
+  "name": "jotagep-site-gol",
   "type": "module",
   "version": "0.0.1",
   "description": "Jotagep's personal website",
@@ -14,7 +14,8 @@
     "lint": "eslint --fix \"src/**/*.{js,ts,jsx,tsx,astro}\"",
     "pretty": "npm run format && npm run lint",
     "preview": "astro preview",
-    "start": "astro dev"
+    "start": "astro dev",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
@@ -46,7 +47,9 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-simple-import-sort": "^12.1.0",
+    "husky": "^9.1.7",
     "iso-639-1": "^3.1.2",
+    "lint-staged": "^15.2.12",
     "locale-emoji": "^0.3.0",
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.13.0",
