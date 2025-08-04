@@ -5,11 +5,7 @@ publishedAt: 2019-09-29
 cover: '../../../assets/posts/9/hero.png'
 description: Aprende a hacer tu sitio web accesible para todos los usuarios, incluyendo aquellos con discapacidades.
 isPublish: true
-relatedPosts:
-  [
-    'hello-world',
-    'front-end-vs-back-end-vs-full-stack-developer',
-  ]
+relatedPosts: ['hello-world', 'front-end-vs-back-end-vs-full-stack-developer']
 translated: how-to-make-your-website-accessible
 tags: ['web-dev']
 ---
@@ -21,6 +17,7 @@ Lo que nos lleva a preguntarnos la siguiente cuestión. **¿Sabemos qué es real
 Decimos que un sitio es **accesible** cuando su contenido está disponible y su funcionalidad puede ser manejada por **cualquier persona**. Siguiendo esta definición, entendemos por **accesibilidad web**, la experiencia que ofrece el sitio a aquellos usuarios, fuera de lo "típico", que presentan algún tipo de discapacidad o impedimento para una navegación común.
 
 ### El mito de la minoría
+
 Uno de los principales factores por los que la accesibilidad es una **asignatura pendiente** es la creencia en que solo afecta a una minoría muy reducida y no vale la pena destinar recursos.
 
 Cuando nos referimos a usuarios que necesitan ayuda de la accesibilidad, solemos pensar en personas que presentan problemas visuales o auditivos graves, como son la **ceguera o la sordera**. Pero estos solo son la **punta del iceberg** de otros muchos usuarios que se benefician de las ventajas de un sitio accesible.
@@ -34,6 +31,7 @@ Podemos dividir las discapacidades en **tres tipos** según su duración:
 Por lo que sumando estas tres categorías, es **más común de lo que parece** encontrarse en una situación de discapacidad. Ya sea temporal, como podría ser una rotura de un hueso del brazo. O incluso una situación circunstancial, como sería el caso de encontrarse en un lugar de trabajo ruidoso y no pudieras apreciar con claridad los sonidos del sitio web por el que navegas en ese instante. En ambos casos se necesitaría aplicar conceptos de accesibilidad para asegurarnos de una correcta navegación por nuestra web.
 
 ### ¿Cómo hacer tu sitio web accesible?
+
 Para conseguir un sitio web más accesible necesitas resolver estas **tres áreas temáticas principales**:
 
 - **Foco**. Es importante crear sitios que puedan ser navegables desde teclado además del ratón.
@@ -43,6 +41,7 @@ Para conseguir un sitio web más accesible necesitas resolver estas **tres área
 La accesibilidad es un **proceso transversal** a todo el proyecto. Por lo que empezaríamos haciendo nuestro sitio más accesible desde cualquiera de las fases de un proyecto de branding. No vamos a tratar en este post cómo enfocar la accesibilidad desde la estrategia, la identidad verbal o visual de marca para no alargarnos mucho, pero veamos cómo hacerlo desde el diseño y luego desde el desarrollo.
 
 ### Accesibilidad en el proceso de diseño
+
 Según **WebAIM**, el error más común, con un **85%**, es el **bajo contraste** en el color de los textos respecto a su background. Este problema afecta sobre todo a los usuarios que presentan una discapacidad visual como **daltonismo** o personas con la vista cansada.
 
 Debemos asegurarnos que nuestros textos presentan un **ratio de contraste mayor a 4.5**, que es el valor mínimo exigido por el **[WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/)** (Guía sobre el contenido accesible web). De esta manera la visualización será más accesible para mayor cantidad de usuarios.
@@ -66,9 +65,11 @@ El diseñador también es responsable de muchos otros factores:
 Una vez tenemos esto cubierto ya estaríamos listos para empezar con el desarrollo de nuestro sitio accesible.
 
 ### Accesibilidad en el proceso de desarrollo
+
 Como hemos definido anteriormente, tenemos **tres áreas principales** por resolver en la parte de desarrollo si queremos que nuestro sitio sea los más accesible posible.
 
 ### Foco
+
 Nos referimos a un **elemento que tiene el foco** cuando recibe la acción directa del teclado. Este elemento suele mostrarse con un borde de color a su alrededor para mostrarnos que es el elemento con el foco activo.
 
 Es importante dar un **estilo alternativo** si decides cambiar el borde que te asigna el navegador por defecto.
@@ -90,6 +91,7 @@ Para que nuestra web sea accesible nos tenemos que asegurar que el usuario puede
 Para definir el orden de navegación tenemos dos factores principales: el **orden en el DOM** y el uso del **tabindex**.
 
 ### Orden en el DOM
+
 El comportamiento por defecto de la navegación mediante el tabulador es cambiar el foco al siguiente elemento interactivo en el DOM. Por este motivo es algo **crucial para la accesibilidad** mantener un orden lógico en todo momento para que el usuario no se pierda el hilo principal de tu página.
 
 Una buena práctica es usar un **botón de "Saltar a contenido"** que esté oculto y solo se muestre cuando navegues por un teclado u otro dispositivo de asistencia.
@@ -112,6 +114,7 @@ Este botón permite al usuario saltar la barra de navegación y centrarse direct
 ```
 
 ### Uso del tabindex
+
 Algunos elementos nativos como los **botones o los links** ya cogen el foco mediante la navegación por teclado por defecto. Pero si quieres meter en el orden natural a otro elemento no interactivo debes usar **tabindex** para que sea accesible desde teclado.
 
 Añadiendo **`tabindex="0"`** a cualquier elemento HTML, nos aseguraremos que entre en el orden natural del TAB. De esta forma podemos conseguir poner el foco mediante teclado en elementos concretos que queremos que el usuario se detenga.
@@ -125,35 +128,59 @@ En nuestra web, tenemos un ejemplo perfecto para ilustrar lo que comentamos en e
 Aquí podemos ver el código HTML de nuestro componente.
 
 ```html
-<ul class="tabs"><li><a data-index="1" href="https://solublestudio.com/hacemos/estrategia-de-marca/" target="_blank">Estrategia</a></li><li><a data-index="2" href="https://solublestudio.com/hacemos/identidad-de-marca/" target="_blank">Identidad</a></li><li><a data-index="3" href="https://solublestudio.com/hacemos/activacion-de-marca/" target="_blank">Activacion</a></li></ul>
+<ul class="tabs">
+  <li>
+    <a
+      data-index="1"
+      href="https://solublestudio.com/hacemos/estrategia-de-marca/"
+      target="_blank"
+      >Estrategia</a
+    >
+  </li>
+  <li>
+    <a
+      data-index="2"
+      href="https://solublestudio.com/hacemos/identidad-de-marca/"
+      target="_blank"
+      >Identidad</a
+    >
+  </li>
+  <li>
+    <a
+      data-index="3"
+      href="https://solublestudio.com/hacemos/activacion-de-marca/"
+      target="_blank"
+      >Activacion</a
+    >
+  </li>
+</ul>
 ```
 
 Seleccionamos todos los elementos que pueden ser focalizados, en este caso los **`a`**. Una vez tenemos un array con todos los elementos ya solo necesitaremos capturar el evento de las flechas de dirección y manejar el foco al nuevo elemento.
 
 ```js
-const tabsList = document.querySelector('ul.tabs');
-const links = tabsList.querySelectorAll('a');
+const tabsList = document.querySelector('ul.tabs')
+const links = tabsList.querySelectorAll('a')
 
 const handleFocus = (e) => {
-  let index = parseInt(document.activeElement.dataset.index);
+  let index = parseInt(document.activeElement.dataset.index)
 
   // Arrow key <
   if (e.keyCode === 37 && index > 1) {
-		index--;
+    index--
   }
 
   // Arrow key >
   if (e.keyCode === 39 && index < links.length) {
-		index++;
+    index++
   }
 
-  links[index-1].focus();
+  links[index - 1].focus()
 }
 
-
-links.forEach(link => {
-	link.addEventListener('keydown', handleFocus);
-});
+links.forEach((link) => {
+  link.addEventListener('keydown', handleFocus)
+})
 ```
 
 Puedes inspeccionar la funcionalidad de este [ejemplo](https://jsfiddle.net/solublestudio/0tyoapLk/).
@@ -161,6 +188,7 @@ Puedes inspeccionar la funcionalidad de este [ejemplo](https://jsfiddle.net/solu
 También existe la posibilidad de usar valores de **`tabIndex > 0`**, que situarían al elemento en la cima del orden natural de navegación. Esta práctica recomiendo **no usarla** ya que está considerada un **anti patrón**.
 
 ### Semántica HTML
+
 **No existe una manera mejor y más simple** de hacer un sitio web accesible, que utilizar una buena semántica HTML. Lo que decía el antiguo refrán **"llama a las cosas por su nombre"**, en el caso de la accesibilidad y el etiquetado HTML le viene como anillo al dedo.
 
 Ya que el simple hecho de usar la etiqueta **`button`** en vez de un **`div`** cuando quieras añadir un elemento clickable, ayuda mucho a los **screen readers** a la hora de como interpretar los elementos del DOM.
@@ -168,12 +196,11 @@ Ya que el simple hecho de usar la etiqueta **`button`** en vez de un **`div`** c
 En alguno casos y como medida excepcional podremos utilizar el atributo **`role`** para redefinir el comportamiento de un elemento.
 
 ```html
-<div role="button" aria-pressed="false">
-  Botón
-</div>
+<div role="button" aria-pressed="false">Botón</div>
 ```
 
 ### ARIA
+
 El **HTML nativo** brinda una ayuda sustancial a la tecnología asistencial, pero no cubre todos los casos posibles. De este nicho es donde surgen las **especificaciones ARIA**. Estas especificaciones se aplican a determinados elementos del DOM para agregar una información extra que deberá ser interpretada por el dispositivo.
 
 Cabe recordar que **ARIA no cambia el comportamiento** del elemento del DOM. Pero si que nos permite modificar el **árbol de accesibilidad** de cualquier componente de la página y por tanto mejorar la experiencia del usuario.
@@ -184,7 +211,9 @@ Como no vamos a profundizar en toda la potencia que tiene ARIA, quiero mostraros
 
 ```html
 // Hamburguer menu
-<button aria-pressed="false" aria-expanded="false" aria-label="Menú"><span class="menu-icon">...</span></button>
+<button aria-pressed="false" aria-expanded="false" aria-label="Menú">
+  <span class="menu-icon">...</span>
+</button>
 ```
 
 Este es el HMTL de nuestro menú para desplegar la barra de navegación en dispositivos móviles. Podemos ver que tiene **tres especificaciones ARIA**:
@@ -196,6 +225,7 @@ Este es el HMTL de nuestro menú para desplegar la barra de navegación en dispo
 Cuando pulsamos el botón los valores de **`aria-pressed`** y **`aria-expanded`** pasarán a ser **`true`**. Al cambiar de valor el **screen reader** se encargará de informar al usuario de que el botón ha sido accionado y se ha abierto el menú.
 
 ### ¿Cómo saber si mi sitio es accesible?
+
 Existen varias **herramientas disponibles** que nos ayudan a testear nuestro sitio. Gracias a ellas somos más conscientes de los errores que estamos cometiendo para tratar de subsanarlos.
 
 En primer lugar tenemos **extensiones para Chrome** como son **[aXe](https://chrome.google.com/webstore/detail/axe-web-accessibility-tes/lhdoppojpmngadmnindnejefpokejbdd)** y **[WAVE](https://chrome.google.com/webstore/detail/wave-evaluation-tool/jbbplnpkjmmeebjpijfedlgcdilocofh)**. Estas dos opciones nos ofrecen una serie de test a nuestra web que resultan muy útiles para identificar problemas como ratios de contraste en los colores, etiquetado HTML o ARIA.
@@ -204,11 +234,12 @@ En primer lugar tenemos **extensiones para Chrome** como son **[aXe](https://chr
 
 Otra buena forma de averiguar si tu sitio es navegable con armonía para las personas que presentan una discapacidad es **ponerte en su piel**. Y que mejor forma que usando la misma tecnología que usan ellos. Intentar navegar tan solo utilizando el **teclado** o con el **modo alto contraste** nos hará conscientes de si se trata de un sitio accesible. También podemos probar nuestro sitio con un **screen reader**, como son la extensión para el navegador **[ChromeVox](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn?hl=es)** o la aplicación **[VoiceOver](https://www.apple.com/es/voiceover/info/guide/_1121.html)**, esta última sólo disponible para Mac.
 
-  Por último vamos a destacar la herramienta **[Lighthouse de Google](https://developers.google.com/web/tools/lighthouse)** que a parte de medir la performance del sitio también tiene un **test de accesibilidad** que chequea si tu sitio cumple con las condiciones esenciales para ser denominado accesible.
+Por último vamos a destacar la herramienta **[Lighthouse de Google](https://developers.google.com/web/tools/lighthouse)** que a parte de medir la performance del sitio también tiene un **test de accesibilidad** que chequea si tu sitio cumple con las condiciones esenciales para ser denominado accesible.
 
 ![Lighthouse test de accesibilidad sobre la página de soluble](../../../assets/posts/9/lighthouse.png)
 
 ### ¿Es posible combinar armonía visual y accesibilidad?
+
 Crear sitios web accesibles te convierte en **mejor desarrollador y diseñador**. Te obliga a usar una **buena praxis** que a su vez incrementa la calidad de tu código. Aunque no todo va a ser "color de rosas".
 
 Ciertos aspectos del diseño se ven **limitados** a la hora de hacer tu sitio accesible. Sobre todo en el caso de las **animaciones**, **gamas de colores**, elementos que aparecen por efectos de scroll, etc.
