@@ -5,11 +5,7 @@ publishedAt: 2019-09-29
 cover: '../../../assets/posts/9/hero.png'
 description: Learn how to make your website accessible to all users, including those with disabilities.
 isPublish: true
-relatedPosts:
-  [
-    'hello-world',
-    'front-end-vs-back-end-vs-full-stack-developer',
-  ]
+relatedPosts: ['hello-world', 'front-end-vs-back-end-vs-full-stack-developer']
 translated: como-hacer-tu-sitio-web-accesible
 tags: ['web-dev']
 ---
@@ -132,35 +128,59 @@ On our website, we have a perfect example to illustrate what we discussed in the
 Here we can see the HTML code of our component.
 
 ```html
-<ul class="tabs"><li><a data-index="1" href="https://solublestudio.com/hacemos/estrategia-de-marca/" target="_blank">Estrategia</a></li><li><a data-index="2" href="https://solublestudio.com/hacemos/identidad-de-marca/" target="_blank">Identidad</a></li><li><a data-index="3" href="https://solublestudio.com/hacemos/activacion-de-marca/" target="_blank">Activacion</a></li></ul>
+<ul class="tabs">
+  <li>
+    <a
+      data-index="1"
+      href="https://solublestudio.com/hacemos/estrategia-de-marca/"
+      target="_blank"
+      >Estrategia</a
+    >
+  </li>
+  <li>
+    <a
+      data-index="2"
+      href="https://solublestudio.com/hacemos/identidad-de-marca/"
+      target="_blank"
+      >Identidad</a
+    >
+  </li>
+  <li>
+    <a
+      data-index="3"
+      href="https://solublestudio.com/hacemos/activacion-de-marca/"
+      target="_blank"
+      >Activacion</a
+    >
+  </li>
+</ul>
 ```
 
 We select all the elements that can be focused, in this case the **`a`**. Once we have an array with all the elements, we just need to capture the direction arrow event and handle the focus to the new element.
 
 ```js
-const tabsList = document.querySelector('ul.tabs');
-const links = tabsList.querySelectorAll('a');
+const tabsList = document.querySelector('ul.tabs')
+const links = tabsList.querySelectorAll('a')
 
 const handleFocus = (e) => {
-  let index = parseInt(document.activeElement.dataset.index);
+  let index = parseInt(document.activeElement.dataset.index)
 
   // Arrow key <
   if (e.keyCode === 37 && index > 1) {
-		index--;
+    index--
   }
 
   // Arrow key >
   if (e.keyCode === 39 && index < links.length) {
-		index++;
+    index++
   }
 
-  links[index-1].focus();
+  links[index - 1].focus()
 }
 
-
-links.forEach(link => {
-	link.addEventListener('keydown', handleFocus);
-});
+links.forEach((link) => {
+  link.addEventListener('keydown', handleFocus)
+})
 ```
 
 You can inspect the functionality of this [example](https://jsfiddle.net/solublestudio/0tyoapLk/).
@@ -176,9 +196,7 @@ Since the simple fact of using the **`button`** tag instead of a **`div`** when 
 In some cases and as an exceptional measure, we can use the **`role`** attribute to redefine the behavior of an element.
 
 ```html
-<div role="button" aria-pressed="false">
-  Button
-</div>
+<div role="button" aria-pressed="false">Button</div>
 ```
 
 ### ARIA
@@ -193,7 +211,9 @@ Since we are not going to delve into all the power that ARIA has, I want to show
 
 ```html
 // Hamburger menu
-<button aria-pressed="false" aria-expanded="false" aria-label="Menú"><span class="menu-icon">...</span></button>
+<button aria-pressed="false" aria-expanded="false" aria-label="Menú">
+  <span class="menu-icon">...</span>
+</button>
 ```
 
 This is the HTML of our menu to display the navigation bar on mobile devices. We can see that it has **three ARIA specifications**:

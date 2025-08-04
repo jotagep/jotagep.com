@@ -36,7 +36,7 @@ const openGraph = {
   publishedTime,
   title: title || config.title,
   type,
-  image: image || '/opengraph-image.jpg',
+  image: image || `${config.siteUrl}og.png`,
   alt: title || config.title,
   url: url || config.siteUrl,
   description: description || config.description,
