@@ -5,7 +5,8 @@
   },
   "common": {
     "date": "Date",
-    "more": "More"
+    "more": "More",
+    "selectLanguage": "Select language"
   },
   "home": {
     "title": "It's Jotagep 👋",
