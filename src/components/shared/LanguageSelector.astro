@@ -4,7 +4,8 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import ISO6991 from 'iso-639-1'
 import localeEmoji from 'locale-emoji'
 
-import { locales } from '@/i18n/ui'
+import { type Language, locales } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/utils'
 
 interface LanguageMapping {
   [localeCode: string]: string
@@ -16,7 +17,8 @@ export interface Props extends HTMLAttributes<'select'> {
   translatedPostSlug?: string
 }
 
-const currentLanguage = Astro.currentLocale
+const currentLanguage = Astro.currentLocale as Language
+const t = useTranslations(currentLanguage)
 
 const { pathname } = Astro.url
 const { translatedPostSlug } = Astro.props
@@ -35,36 +37,45 @@ const {
 } = Astro.props
 ---
 
-<select
-  class:list={[
-    'bg-transparent dark:focus:bg-neutral-950 cursor-pointer',
-    className,
-  ]}
-  onchange="location = this.value;"
-  {...attributes}
->
-  {
-    locales.map((supportedLanguage: string) => {
-      const isCurrentLanguage = supportedLanguage === currentLanguage
-      const path = isCurrentLanguage
-        ? pathname
-        : translatedPath.replace(`/${currentLanguage}`, '')
-      let value = getRelativeLocaleUrl(supportedLanguage, path)
-      const flag = showFlag ? localeEmoji(supportedLanguage) + ' ' : ''
+<div>
+  <label for="language-select" class="sr-only">
+    {t('common.selectLanguage')}
+  </label>
+  <select
+    class:list={[
+      'bg-transparent dark:focus:bg-neutral-950 cursor-pointer',
+      className,
+    ]}
+    onchange="location = this.value;"
+    id="language-select"
+    {...attributes}
+  >
+    {
+      locales.map((supportedLanguage: string) => {
+        const isCurrentLanguage = supportedLanguage === currentLanguage
+        const path = isCurrentLanguage
+          ? pathname
+          : translatedPath.replace(`/${currentLanguage}`, '')
+        let value = getRelativeLocaleUrl(supportedLanguage, path)
+        const flag = showFlag ? localeEmoji(supportedLanguage) + ' ' : ''
 
-      let nativeName = ''
-      if (languageMapping && languageMapping[supportedLanguage]) {
-        nativeName = languageMapping[supportedLanguage]
-      } else {
-        nativeName = ISO6991.getNativeName(supportedLanguage)
-      }
+        let nativeName = ''
+        if (languageMapping && languageMapping[supportedLanguage]) {
+          nativeName = languageMapping[supportedLanguage]
+        } else {
+          nativeName = ISO6991.getNativeName(supportedLanguage)
+        }
 
-      return (
-        <option value={value} selected={supportedLanguage === currentLanguage}>
-          <span>{flag}</span>
-          <span class="hidden md:inline">{nativeName}</span>
-        </option>
-      )
-    })
-  }
-</select>
+        return (
+          <option
+            value={value}
+            selected={supportedLanguage === currentLanguage}
+          >
+            <span>{flag}</span>
+            <span class="hidden md:inline">{nativeName}</span>
+          </option>
+        )
+      })
+    }
+  </select>
+</div>
