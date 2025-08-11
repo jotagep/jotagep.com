@@ -7,11 +7,7 @@ const postsCollection = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      cover: image()
-        .refine((img) => img.width >= 600, {
-          message: 'Cover image must be at least 600 pixels wide!',
-        })
-        .optional(),
+      cover: image().optional(),
       publishedAt: z.date(),
       description: z.string(),
       relatedPosts: z.array(reference('posts')).optional(),

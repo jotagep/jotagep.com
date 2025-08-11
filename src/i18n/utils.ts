@@ -7,7 +7,7 @@ export function getLangFromUrl(url: URL) {
 }
 
 export const extractedVariables = (template: string) =>
-  (template.match(/{(\w+)}/g) || []).map((v) => v.slice(1, -1))
+  (template.match(/{(\w+)}/g) || []).map((v: string) => v.slice(1, -1))
 
 function isString(value: unknown): value is string {
   return typeof value === 'string'
