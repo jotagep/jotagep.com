@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import { getEntry } from 'astro:content'
 
 import PostCard from '@/components/PostCard.astro'
 import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
@@ -27,6 +28,9 @@ const { href } = Astro.url
 
 const { Content } = await post.render()
 const relatedPosts = await getRelatedPosts(post.data.relatedPosts)
+const translatedPost = post.data.translated
+  ? await getEntry('posts', post.data.translated.id)
+  : undefined
 const isOlderThan2Years =
   new Date(post.data.publishedAt).getTime() < new Date().getTime() - 63072000000
 const seo: HeadTagsProps['seo'] = {
@@ -39,7 +43,7 @@ const seo: HeadTagsProps['seo'] = {
 }
 ---
 
-<Layout {seo} translatedPostSlug={post.data.translated?.slug}>
+<Layout {seo} translatedPostSlug={translatedPost?.slug}>
   <article
     itemscope=""
     itemtype="http://schema.org/Article"
