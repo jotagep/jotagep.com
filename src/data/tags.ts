@@ -9,11 +9,9 @@ export type Tag = {
 }
 
 export const TAGS: Tag[] = [
-  { label: 'React', slug: 'react', color: 'sky' },
-  { label: 'JavaScript', slug: 'javascript', color: 'yellow' },
-  { label: 'Next.js', slug: 'nextjs', color: 'black' },
   { label: 'Web dev', slug: 'web-dev', color: 'white' },
-  { label: 'TypeScript', slug: 'typescript', color: 'blue' },
+  { label: 'JavaScript', slug: 'javascript', color: 'yellow' },
+  { label: 'AI', slug: 'ai', color: 'orange' },
   { label: 'Angular', slug: 'angular', color: 'red' },
 ]
 

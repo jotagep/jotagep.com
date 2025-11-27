@@ -7,6 +7,7 @@ export const activeColorClasses = {
   gray: 'bg-gray-200 text-gray-800',
   white: 'bg-gray-200 text-gray-800',
   black: 'bg-gray-800 text-gray-200',
+  orange: 'bg-orange-200 text-orange-800',
 } as const
 
 export type ColorBadge = keyof typeof activeColorClasses
@@ -20,4 +21,5 @@ export const hoverColorClasses: Record<ColorBadge, string> = {
   gray: 'hover:bg-gray-200 hover:text-gray-800',
   white: 'hover:bg-gray-200 hover:text-gray-800',
   black: 'hover:bg-gray-800 hover:text-gray-200',
+  orange: 'hover:bg-orange-200 hover:text-orange-800',
 }

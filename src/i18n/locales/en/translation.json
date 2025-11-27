@@ -24,8 +24,8 @@
     "workingAt": "Currently working at"
   },
   "job": {
-    "fullTime": "Full time. 40h/week",
-    "partTime": "Part time. Max 20h/week"
+    "fullTime": "Full time",
+    "contractor": "Contractor"
   },
   "navigation": {
     "about": "About",

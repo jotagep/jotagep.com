@@ -15,6 +15,7 @@ const postsCollection = defineCollection({
       translated: reference('posts').optional(),
       isPublish: z.boolean(),
       isDraft: z.boolean().default(false),
+      objectContainImage: z.boolean().optional().default(false),
     }),
 })
 

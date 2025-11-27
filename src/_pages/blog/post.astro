@@ -77,6 +77,7 @@ const seo: HeadTagsProps['seo'] = {
             src={post.data.cover as ImageMetadata}
             alt={post.data.title}
             width={600}
+            objectFitContain={post.data.objectContainImage}
             transitionName={`post-img-${post.slug}`}
             loading="eager"
           />
