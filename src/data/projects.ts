@@ -12,7 +12,7 @@ const projects: Project[] = [
     title: 'Harmony Dapp Template',
     description:
       'Hackaton project: All-in-one forkable Harmony dev stack to build your dapp',
-    techs: ['React', 'TypeScript', 'Ethers', 'Solidity', 'Hardhat'],
+    techs: ['React', 'TypeScript', 'Docker', 'Ethers', 'Solidity', 'Hardhat'],
     link: 'https://github.com/jotagep/harmony-dapp-template',
     prize: '5000$',
   },
@@ -34,7 +34,7 @@ const projects: Project[] = [
   {
     title: 'Jotagep portfolio',
     description: 'Personal portfolio built with Astro',
-    techs: ['Astro', 'TypeScript', 'Tailwind'],
+    techs: ['Astro', 'TypeScript', 'Tailwind', 'MDX'],
     link: 'https://github.com/jotagep/jotagep.com',
   },
 ]
