@@ -14,8 +14,14 @@ import {
 // Get posts data for sitemap
 const posts = getPostsSitemap()
 
-const LAST_UPDATE_HOME = '2025-08-11'
-const LAST_UPDATE_BLOG = '2025-08-11'
+// Calculate the latest post date for the blog index
+const latestPostDate = posts.reduce((latest, post) => {
+  const postDate = new Date(post.lastmod)
+  return postDate > latest ? postDate : latest
+}, new Date(0))
+
+const LAST_UPDATE_BLOG = latestPostDate.toISOString()
+const LAST_UPDATE_HOME = new Date().toISOString()
 
 // https://astro.build/config
 export default defineConfig({
