@@ -16,19 +16,24 @@ const lang = Astro.currentLocale as Language
   <span class="lowercase dark:text-white italic font-semibold text-3xl"
     >{config.logoTitle}</span
   >
-  <Image src={logoImg} class="ml-2 w-12 dark:invert" alt="Logo" />
+  <Image
+    src={logoImg}
+    width={96}
+    quality={100}
+    class="ml-2 w-12 dark:invert will-change-transform"
+    alt="Logo"
+  />
 </a>
 
 <style>
   .logo {
     font-family: 'Lato', sans-serif;
     transition: all 0.3s ease;
-    will-change: transform;
   }
 
   @media screen(md) {
     .logo:hover {
-      transform: scale(1.07);
+      transform: scale(1.05);
     }
   }
 </style>

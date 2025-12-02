@@ -12,7 +12,7 @@ import Link from '@/components/shared/Link.astro'
 import SocialLinks from '@/components/shared/SocialLinks.astro'
 
 import config from '@/data/config'
-import { currentsJobs } from '@/data/jobs'
+import { lastJobs } from '@/data/jobs'
 import projects from '@/data/projects'
 
 import Translate from '@/i18n/Translate.astro'
@@ -27,7 +27,7 @@ import parseAsteriskToSpanTag from '@/utils/parseAsteriskToSpanTag'
 import { getBlogPath } from '@/utils/pathHelper'
 
 import contactImage from '../assets/home/contact.webp'
-import localImage from '../assets/home/jotagep.png'
+import profileImg from '../assets/home/jotagep.jpeg'
 
 const lang = Astro.currentLocale as Language
 
@@ -53,10 +53,11 @@ const t = useTranslations(lang)
         <SocialLinks class="hidden md:flex mt-12" icons />
       </div>
       <ImageBlur
-        class="hidden md:block flex-shrink-0 rounded-xl w-48 h-64"
-        src={localImage}
+        class="hidden md:block flex-shrink-0 rounded-xl w-48 h-64 scale-x-[-1]"
+        src={profileImg}
         alt="Jota's profile picture"
         width={192}
+        quality={100}
         loading="eager"
         transitionName="profile-home"
       />
@@ -66,8 +67,8 @@ const t = useTranslations(lang)
       <SectionHeader title={t('home.workingAt')} />
       <div class="flex flex-col gap-4 md:flex-row md:flex-wrap">
         {
-          currentsJobs.length !== 0 &&
-            currentsJobs.map((job) => <JobCard job={job} />)
+          lastJobs.length !== 0 &&
+            lastJobs.slice(0, 2).map((job) => <JobCard job={job} />)
         }
       </div>
     </Section>

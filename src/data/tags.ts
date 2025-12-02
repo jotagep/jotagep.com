@@ -9,12 +9,12 @@ export type Tag = {
 }
 
 export const TAGS: Tag[] = [
-  { label: 'React', slug: 'react', color: 'sky' },
-  { label: 'JavaScript', slug: 'javascript', color: 'yellow' },
-  { label: 'Next.js', slug: 'nextjs', color: 'black' },
   { label: 'Web dev', slug: 'web-dev', color: 'white' },
-  { label: 'TypeScript', slug: 'typescript', color: 'blue' },
+  { label: 'AI', slug: 'ai', color: 'orange' },
+  { label: 'Full stack', slug: 'full-stack', color: 'green' },
+  { label: 'JavaScript', slug: 'javascript', color: 'yellow' },
   { label: 'Angular', slug: 'angular', color: 'red' },
+  { label: 'React', slug: 'react', color: 'sky' },
 ]
 
 const TAG_SLUGS: [Tag['slug'], ...Tag['slug'][]] = [

@@ -1,0 +1,186 @@
+---
+title: 'JSON vs TOON: Ahorra tokens en tus LLMs 🪙'
+slug: json-vs-toon-ahorra-tokens
+publishedAt: 2025-11-20
+cover: '../../../assets/posts/12/hero.png'
+description: Descubre TOON, el nuevo formato que promete desbancar a JSON para alimentar a los LLMs y ahorrarte una fortuna en tokens.
+isPublish: true
+relatedPosts: ['el-stack-de-cloudflare', 'que-es-un-design-system-frontend']
+translated: json-vs-toon-save-tokens
+tags: ['ai']
+objectContainImage: true
+---
+
+¡Hola a todos! 👋 Bienvenidos de nuevo al blog.
+
+Hoy vengo a hablaros de un tema que está en boca de todos los que trabajamos con Inteligencia Artificial y LLMs (Large Language Models): **la optimización de tokens**. Y es que, amigos, en el mundo de la IA, los tokens son dinero 💸. Literalmente.
+
+Si lleváis un tiempo "cacharreando" con modelos como GPT-4, Claude o Gemini, sabréis que alimentar a la bestia con datos estructurados es el pan de cada día. Ya sea para RAG (Retrieval-Augmented Generation), para fine-tuning o simplemente para dar contexto, necesitamos pasarle datos al modelo. Y aquí es donde nuestro viejo amigo **JSON** ha sido el rey indiscutible... hasta ahora.
+
+## El problema con JSON: La "tasa" de verbosidad 🐢
+
+No me malinterpretéis, adoro JSON. Es legible, fácil de parsear y universal. Ha sido el estándar de facto para el intercambio de datos en la web durante años. Pero cuando se trata de enviar grandes cantidades de datos a un LLM, JSON tiene un "pequeño" problema: es **extremadamente verboso**.
+
+Imaginad que tenéis una lista de 1000 usuarios. En JSON, repetís las claves `name`, `email`, `role`, etc., ¡1000 veces!
+
+```json
+{
+  "users": [
+    { "id": 1, "name": "Jorge", "role": "Developer", "active": true },
+    { "id": 2, "name": "Maria", "role": "Designer", "active": false }
+    // ... imagina esto repetido 1000 veces 😱
+  ]
+}
+```
+
+Cada vez que repites `"name":`, estás gastando tokens. Tokens que podrías estar usando para darle más contexto al modelo o para obtener una respuesta más larga. Es estructura redundante que el modelo no necesita ver constantemente para entender los datos.
+
+## ¿Qué es TOON? 🦸‍♂️
+
+Aquí es donde entra en juego **TOON** (Token-Oriented Object Notation). Es un formato diseñado específicamente para ser "token-friendly". Su objetivo es mantener la estructura de los datos pero eliminando la redundancia sintáctica que tanto nos cuesta en la factura de la API.
+
+Pensad en TOON como una **capa de traducción**: usas JSON en tu código (porque es cómodo), pero lo codificas a TOON antes de enviárselo al LLM.
+
+La filosofía de TOON es sencilla pero brillante: combina la estructura basada en indentación de **YAML** (para objetos anidados) con la eficiencia tabular de **CSV** (para arrays uniformes).
+
+### ¿Cómo funciona?
+
+La clave está en **declarar la estructura una sola vez** y luego hacer "streaming" de los datos.
+
+Veamos el ejemplo anterior convertido a TOON:
+
+```toon
+users[2]{id,name,role,active}:
+1,Jorge,Developer,true
+2,Maria,Designer,false
+```
+
+¡Fijaos en la limpieza! 🧹
+
+1.  **`users[2]`**: Declara explícitamente la longitud del array. Esto ayuda al LLM a saber si se ha cortado la generación o si faltan datos.
+2.  **`{id,name,role,active}`**: Define las cabeceras (las claves) una sola vez.
+3.  **`1,Jorge...`**: Los datos van en filas, separados por comas, como en un CSV.
+
+Hemos eliminado todas las comillas de las claves, las llaves repetitivas y las propias claves repetidas. Para un array de 2 elementos quizás no parezca mucho, pero escalad esto a miles de registros y la diferencia es abismal.
+
+## Un ejemplo más complejo: Lo mejor de dos mundos 🌍
+
+TOON no es solo un CSV glorificado. Su potencia real se ve cuando mezclamos objetos y arrays. Mirad este ejemplo sacado de su documentación oficial, donde tenemos un contexto (objeto) y listas de datos (arrays):
+
+**En JSON:**
+
+```json
+{
+  "context": {
+    "task": "Nuestras excursiones favoritas",
+    "location": "Pirineos",
+    "season": "verano_2025"
+  },
+  "friends": ["ana", "luis", "sam"],
+  "hikes": [
+    { "id": 1, "name": "Monte Perdido", "km": 15.5, "hard": true },
+    { "id": 2, "name": "Aneto", "km": 12.2, "hard": true },
+    { "id": 3, "name": "Cola de Caballo", "km": 18.0, "hard": false }
+  ]
+}
+```
+
+**En TOON:**
+
+```toon
+context:
+  task: Nuestras excursiones favoritas
+  location: Pirineos
+  season: verano_2025
+friends[3]: ana,luis,sam
+hikes[3]{id,name,km,hard}:
+1,Monte Perdido,15.5,true
+2,Aneto,12.2,true
+3,Cola de Caballo,18.0,false
+```
+
+Aquí vemos la magia:
+
+- `context` usa un estilo tipo YAML (clave-valor con indentación).
+- `friends` es un array de primitivos, super compacto.
+- `hikes` es un array de objetos, que se renderiza como una tabla.
+
+El formato se adapta automáticamente a la estructura de tus datos para ser lo más eficiente posible.
+
+## ¿Por qué usar TOON? (Design Goals) 🎯
+
+Según sus creadores, TOON tiene unos objetivos de diseño muy claros que lo hacen ideal para LLMs:
+
+1.  **Eficiencia de Tokens**: Reduce el uso de tokens entre un **30% y un 60%** comparado con JSON pretty-printed.
+2.  **Schema-Aware**: Al incluir la longitud del array `[N]` y las cabeceras, le damos pistas explícitas al modelo. Esto reduce las alucinaciones y ayuda a validar que la salida está completa.
+3.  **Legibilidad Humana**: A diferencia de formatos binarios o minificados al extremo, TOON sigue siendo legible por nosotros.
+4.  **Lossless**: Es una representación sin pérdidas del modelo de datos JSON. Puedes ir de JSON -> TOON -> JSON sin perder nada.
+
+## ¿Cuándo usarlo (y cuándo NO)? 🚦
+
+Como toda herramienta, no es una bala de plata. Aquí os dejo mi recomendación:
+
+### ✅ Úsalo cuando:
+
+- Tengas **arrays uniformes de objetos** (listas de productos, usuarios, logs, transacciones). Aquí es donde TOON brilla y destroza a JSON en eficiencia.
+- El coste de los tokens sea una preocupación (¿y cuándo no lo es?).
+- Necesites maximizar la ventana de contexto para meter más información.
+
+### ❌ No lo uses cuando:
+
+- Tus datos sean **muy irregulares** o profundamente anidados sin patrones repetitivos. Si cada objeto tiene claves distintas, TOON no puede usar su formato tabular y acaba pareciéndose a YAML, perdiendo su ventaja.
+- Necesites latencia ultra-baja en modelos locales muy pequeños que quizás no han visto este formato nunca (aunque los modelos grandes lo entienden perfectamente con un prompt adecuado).
+- Sean datos puramente tabulares y planos: ahí un simple CSV puede ser incluso más ligero (aunque TOON añade seguridad con los tipos y longitudes).
+
+## Benchmarks y Ahorro 📊
+
+Las pruebas preliminares son impresionantes. En datasets típicos de RAG, el ahorro es sustancial.
+
+```
+🛒 E-commerce orders with nested structures  ┊  Tabular: 33%
+   │
+   TOON                █████████████░░░░░░░    72,771 tokens
+   ├─ vs JSON          (−33.1%)               108,806 tokens
+   ├─ vs JSON compact  (+5.5%)                 68,975 tokens
+   ├─ vs YAML          (−14.2%)                84,780 tokens
+   └─ vs XML           (−40.5%)               122,406 tokens
+
+🧾 Semi-uniform event logs  ┊  Tabular: 50%
+   │
+   TOON                █████████████████░░░   153,211 tokens
+   ├─ vs JSON          (−15.0%)               180,176 tokens
+   ├─ vs JSON compact  (+19.9%)               127,731 tokens
+   ├─ vs YAML          (−0.8%)                154,505 tokens
+   └─ vs XML           (−25.2%)               204,777 tokens
+
+🧩 Deeply nested configuration  ┊  Tabular: 0%
+   │
+   TOON                ██████████████░░░░░░       631 tokens
+   ├─ vs JSON          (−31.3%)                   919 tokens
+   ├─ vs JSON compact  (+11.9%)                   564 tokens
+   ├─ vs YAML          (−6.2%)                    673 tokens
+   └─ vs XML           (−37.4%)                 1,008 tokens
+
+──────────────────────────────────── Total ────────────────────────────────────
+   TOON                ████████████████░░░░   226,613 tokens
+   ├─ vs JSON          (−21.8%)               289,901 tokens
+   ├─ vs JSON compact  (+14.9%)               197,270 tokens
+   ├─ vs YAML          (−5.6%)                239,958 tokens
+   └─ vs XML           (−31.0%)               328,191 tokens
+```
+
+_Imaginad reducir vuestra factura de OpenAI o Anthropic a la mitad solo por cambiar el formato de los datos de entrada._ 🤯
+
+## Conclusión
+
+La optimización es clave en esta nueva era de la IA. Herramientas como TOON nos ayudan a ser más eficientes y a construir mejores productos. No se trata solo de ahorrar dinero, sino de hacer que nuestras aplicaciones sean más rápidas y capaces de procesar más información.
+
+TOON es todavía joven, pero su propuesta de valor es innegable. Si estáis construyendo aplicaciones intensivas en datos con LLMs, os animo a probarlo. Podéis encontrar más información y la documentación completa en su [página oficial](https://toonformat.dev/).
+
+¿Y vosotros? ¿Ya habéis probado formatos alternativos a JSON como YAML o XML para vuestros prompts? ¡Contádmelo en las redes!
+
+Espero que os haya gustado este post y que os ayude a ahorrar unos cuantos tokens (y euros). 😉
+
+¡Un saludo y nos vemos en el próximo post! 🚀
+
+Paz ✌️.

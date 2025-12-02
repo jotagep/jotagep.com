@@ -21,11 +21,11 @@
     },
     "seeAllPosts": "Ver todos los posts",
     "viewMoreProjects": "Ver más proyectos",
-    "workingAt": "Actualmente trabajando en"
+    "workingAt": "Ultimamente trabajando en"
   },
   "job": {
-    "fullTime": "Tiempo completo. 40h/semana",
-    "partTime": "Tiempo parcial. Max 20h/semana"
+    "fullTime": "Tiempo completo",
+    "contractor": "Freelance"
   },
   "navigation": {
     "about": "Sobre mi",

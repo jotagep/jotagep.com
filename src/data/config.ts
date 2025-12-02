@@ -9,15 +9,15 @@ type Social = {
 const config = {
   mail: 'jotagepweb@gmail.com',
   siteUrl: 'https://jotagep.com/',
-  title: 'Jotagep - Web Developer',
+  title: 'Jotagep - Your Developer',
   logoTitle: 'Jotagep',
   description: 'A minimal portfolio template built with Astro and Tailwindcss.',
   postPerPage: 8,
   socials: [
     {
-      icon: 'twitter-logo',
-      label: 'Twitter',
-      link: 'https://twitter.com/jotagep_dev',
+      icon: 'x-logo',
+      label: 'X',
+      link: 'https://x.com/jotagep_dev',
     },
     {
       icon: 'linkedin-logo',

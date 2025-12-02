@@ -78,6 +78,7 @@
     "prisma/",
     "scripts/",
     "*.d.ts",
-    "*.config.cjs"
+    "*.config.cjs",
+    "**/*.md"
   ]
 }

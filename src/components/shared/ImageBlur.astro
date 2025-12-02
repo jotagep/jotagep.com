@@ -6,9 +6,15 @@ type ImgProps = LocalImageProps
 export type Props = ImgProps & {
   src: ImageMetadata
   transitionName?: string
+  objectFitContain?: boolean
 }
 
-const { class: className, transitionName, ...props } = Astro.props
+const {
+  class: className,
+  transitionName,
+  objectFitContain,
+  ...props
+} = Astro.props
 
 const hasCustomHeight =
   className.includes('h-') || className.includes('aspect-')
@@ -23,7 +29,11 @@ if (props.src && !hasCustomHeight) {
 ---
 
 <div
-  class:list={['image-blur relative overflow-hidden', className]}
+  class:list={[
+    'image-blur relative overflow-hidden',
+    objectFitContain ? 'object-img-contain' : '',
+    className,
+  ]}
   transition:name={transitionName}
   {style}
 >
@@ -51,9 +61,15 @@ if (props.src && !hasCustomHeight) {
       filter 0.6s,
       transform 0.6s;
   }
+
+  .image-blur.object-img-contain img {
+    object-fit: contain;
+  }
+
   .image-blur img:global(.loaded) + img {
     opacity: 0;
   }
+
   .image-blur img:global(.loaded) {
     transform: scale(1);
     filter: blur(0);
