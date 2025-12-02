@@ -26,6 +26,7 @@ const projects: Project[] = [
       'Jest',
       'Redux',
       'Storybook',
+      'Playwright',
       'Tailwind',
       'Redis',
     ],
