@@ -5,6 +5,7 @@ import { iconPaths } from '@/utils/iconPaths'
 
 export interface Props {
   icon: keyof typeof iconPaths
+  alt?: string
   color?: string
   class?: HTMLAttributes<'svg'>['class']
   gradient?: boolean
@@ -12,6 +13,7 @@ export interface Props {
 }
 
 const {
+  alt = '',
   color = 'currentcolor',
   class: className,
   gradient,
@@ -33,7 +35,7 @@ const gradientId =
   height="40"
   viewBox="0 0 256 256"
   aria-hidden="true"
-  aria-label={icon}
+  aria-label={`${alt} icon`}
   stroke={gradient ? `url(#${gradientId})` : color}
   fill={gradient ? `url(#${gradientId})` : color}
   class={className}
