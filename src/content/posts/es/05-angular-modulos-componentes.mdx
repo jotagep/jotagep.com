@@ -48,7 +48,7 @@ import { SomeProvider } from './providers/some_provider'
 export class AppModule {}
 ```
 
-Este sería un ejemplo del **_root module_**de una aplicación de Angular. Importamos las librerías utilizando JavaScript y las encapsulamos en el decorador _@NgModule._ Como podreís observar el decorador tiene una serie de *metadatos *o propiedades. Vamos a definir las más importantes, el resto las podeís ver en la [documentación](https://angular.io/api/core/NgModule) oficial de Angular.
+Este sería un ejemplo del ***root module***de una aplicación de Angular. Importamos las librerías utilizando JavaScript y las encapsulamos en el decorador _@NgModule._ Como podreís observar el decorador tiene una serie de *metadatos *o propiedades. Vamos a definir las más importantes, el resto las podeís ver en la [documentación](https://angular.io/api/core/NgModule) oficial de Angular.
 
 - **declarations**: Son los componentes, directivas y pipes que pertenecen a este módulo.
 - **exports**: Conjunto de "_declarations_" que deben ser accesibles para _components templates_ de otros módulos.
@@ -93,7 +93,7 @@ Este ejemplo muestra algunos de los atributos más importante y usados:
 - **templateUrl**: Es la url donde se encuentra el _template_ que quieres vincular a este componente.
 - **styleUrls**: Un array con las urls a los archivos de estilo (CSS) que aplicaremos a nuestro componente.
 
-También os preguntareis por qué la clase implementa la *interface OnInit. *Esto tiene que ver con el ciclo de vida de los componentes de Angular. En este caso, el método **_ngOnInit_**heredado de esa interfaz se ejecutaría cuando se crea el componente. En este post no entraremos en detalle sobre el ciclo de vida, lo trataremos en profundidad en próximo post. Os adjunto la [documentación](https://angular.io/guide/lifecycle-hooks) para los más curiosos 🤔.
+También os preguntareis por qué la clase implementa la *interface OnInit. *Esto tiene que ver con el ciclo de vida de los componentes de Angular. En este caso, el método ***ngOnInit***heredado de esa interfaz se ejecutaría cuando se crea el componente. En este post no entraremos en detalle sobre el ciclo de vida, lo trataremos en profundidad en próximo post. Os adjunto la [documentación](https://angular.io/guide/lifecycle-hooks) para los más curiosos 🤔.
 
 ### Template
 

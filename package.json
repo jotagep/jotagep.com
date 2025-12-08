@@ -6,13 +6,13 @@
   "license": "MIT",
   "scripts": {
     "astro": "astro",
-    "build": "npm run care && astro build",
+    "build": "bun care && astro build",
     "build:only": "astro build --dev",
-    "care": "astro check && tsc --noEmit && npm run pretty",
+    "care": "astro check && tsc --noEmit && bun pretty",
     "dev": "astro dev",
     "format": "prettier --write  \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
     "lint": "eslint --fix \"src/**/*.{js,ts,jsx,tsx,astro}\"",
-    "pretty": "npm run format && npm run lint",
+    "pretty": "bun format && bun lint",
     "preview": "astro preview",
     "start": "astro dev",
     "prepare": "husky"
