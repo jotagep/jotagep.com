@@ -7,6 +7,7 @@ import ProjectCard from '@/components/ProjectCard.astro'
 import Section from '@/components/Section.astro'
 import SectionCard from '@/components/SectionCard.astro'
 import SectionHeader from '@/components/SectionHeader.astro'
+import Card3D from '@/components/shared/Card3D'
 import ImageBlur from '@/components/shared/ImageBlur.astro'
 import Link from '@/components/shared/Link.astro'
 import SocialLinks from '@/components/shared/SocialLinks.astro'
@@ -52,84 +53,86 @@ const t = useTranslations(lang)
         />
         <SocialLinks class="hidden md:flex mt-12" icons />
       </div>
-      <ImageBlur
-        class="hidden md:block flex-shrink-0 rounded-xl w-48 h-64 scale-x-[-1]"
-        src={profileImg}
-        alt="Jota's profile picture"
-        width={192}
-        quality={100}
-        loading="eager"
-        transitionName="profile-home"
-      />
+      <Card3D className="hidden md:block" client:media="(min-width: 768px)">
+        <ImageBlur
+          class="hidden md:block flex-shrink-0 rounded-xl w-48 h-64 scale-x-[-1]"
+          src={profileImg}
+          alt="Jota's profile picture"
+          width={192}
+          quality={100}
+          loading="eager"
+          transitionName="profile-home"
+        />
+      </Card3D>
     </Section>
-
-    <Section>
-      <SectionHeader title={t('home.workingAt')} />
-      <div class="flex flex-col gap-4 md:flex-row md:flex-wrap">
-        {
-          lastJobs.length !== 0 &&
-            lastJobs.slice(0, 2).map((job) => <JobCard job={job} />)
-        }
-      </div>
-    </Section>
-
-    <Section>
-      <SectionHeader
-        title={t('home.latestPosts')}
-        pageLink={{
-          href: getBlogPath(lang),
-          label: t('home.seeAllPosts'),
-        }}
-      />
-      {posts.length === 0 && <p>{t('home.noPosts')}</p>}
-
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {
-          posts.length !== 0 &&
-            posts.slice(0, 2).map((post) => <PostCard {post} />)
-        }
-      </div>
-    </Section>
-
-    <Section>
-      <SectionHeader
-        title={t('home.selectedProjects')}
-        pageLink={{
-          href: 'https://github.com/jotagep',
-          label: t('home.viewMoreProjects'),
-        }}
-      />
-      {projects.length === 0 && <p>{t('home.noProjects')}</p>}
-
-      <section class="flex flex-col gap-4">
-        {
-          projects.length !== 0 &&
-            projects.map((project) => <ProjectCard {...project} />)
-        }
-      </section>
-    </Section>
-
-    <SectionCard>
-      <SectionHeader title={t('home.getInTouch.title')} center />
-      <Translate
-        as="p"
-        class="text-center text-lg"
-        i18nKey="home.getInTouch.description"
-      >
-        If you have any questions or want to contact me, do not hesitate to send
-        me an <Link
-          color="indigo"
-          href={`mailto:${config.mail}`}
-          label={config.mail}
-          slot="email"
-        >
-          email
-        </Link> or contact me through
-        <Link color="blue" href={linkedInUrl} label="LinkedIn" slot="linkedin"
-          >LinkedIn</Link
-        >
-      </Translate>
-      <Image class="w-2/4 md:w-1/4" src={contactImage} alt="contact image" />
-    </SectionCard>
   </main>
+
+  <Section>
+    <SectionHeader title={t('home.workingAt')} />
+    <div class="flex flex-col gap-4 md:flex-row md:flex-wrap">
+      {
+        lastJobs.length !== 0 &&
+          lastJobs.slice(0, 2).map((job) => <JobCard job={job} />)
+      }
+    </div>
+  </Section>
+
+  <Section>
+    <SectionHeader
+      title={t('home.latestPosts')}
+      pageLink={{
+        href: getBlogPath(lang),
+        label: t('home.seeAllPosts'),
+      }}
+    />
+    {posts.length === 0 && <p>{t('home.noPosts')}</p>}
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {
+        posts.length !== 0 &&
+          posts.slice(0, 2).map((post) => <PostCard {post} />)
+      }
+    </div>
+  </Section>
+
+  <Section>
+    <SectionHeader
+      title={t('home.selectedProjects')}
+      pageLink={{
+        href: 'https://github.com/jotagep',
+        label: t('home.viewMoreProjects'),
+      }}
+    />
+    {projects.length === 0 && <p>{t('home.noProjects')}</p>}
+
+    <section class="flex flex-col gap-4">
+      {
+        projects.length !== 0 &&
+          projects.map((project) => <ProjectCard {...project} />)
+      }
+    </section>
+  </Section>
+
+  <SectionCard>
+    <SectionHeader title={t('home.getInTouch.title')} center />
+    <Translate
+      as="p"
+      class="text-center text-lg"
+      i18nKey="home.getInTouch.description"
+    >
+      If you have any questions or want to contact me, do not hesitate to send
+      me an <Link
+        color="indigo"
+        href={`mailto:${config.mail}`}
+        label={config.mail}
+        slot="email"
+      >
+        email
+      </Link> or contact me through
+      <Link color="blue" href={linkedInUrl} label="LinkedIn" slot="linkedin"
+        >LinkedIn</Link
+      >
+    </Translate>
+    <Image class="w-2/4 md:w-1/4" src={contactImage} alt="contact image" />
+  </SectionCard>
 </Layout>
