@@ -9,6 +9,20 @@ export type Project = {
 
 const projects: Project[] = [
   {
+    title: 'Battleship Multiplayer Game',
+    description:
+      'Real-time Battleship built for fast, lightweight, globally distributed multiplayer play. It features a Hono API on Cloudflare Workers and PartyKit for real-time state sync, all managed in a Turborepo monorepo.',
+    techs: [
+      'Partykit',
+      'Cloudflare Workers',
+      'Hono',
+      'Next.js',
+      'Turborepo',
+      'Bun',
+    ],
+    link: 'https://github.com/jotagep/battleship-partykit',
+  },
+  {
     title: 'Harmony Dapp Template',
     description:
       'Hackaton project: All-in-one forkable Harmony dev stack to build your dapp',
