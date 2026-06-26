@@ -1,0 +1,15 @@
+---
+import { localesWithoutDefault } from '@/i18n/ui'
+
+import PrivacyPage from '@/_pages/privacy.astro'
+
+export const getStaticPaths = () => {
+  return localesWithoutDefault.map((lang) => ({
+    params: {
+      lang,
+    },
+  }))
+}
+---
+
+<PrivacyPage />

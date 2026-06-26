@@ -19,4 +19,16 @@ const postsCollection = defineCollection({
     }),
 })
 
-export const collections = { posts: postsCollection }
+const privacyCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    lastUpdated: z.date(),
+  }),
+})
+
+export const collections = {
+  posts: postsCollection,
+  privacy: privacyCollection,
+}

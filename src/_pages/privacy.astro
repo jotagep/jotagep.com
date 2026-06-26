@@ -1,0 +1,33 @@
+---
+import { getEntry } from 'astro:content'
+
+import type { Language } from '@/i18n/ui'
+
+import Layout from '@/layouts/Layout.astro'
+
+const lang = Astro.currentLocale as Language
+const privacyEntry = await getEntry('privacy', lang)
+
+if (!privacyEntry) {
+  throw new Error(`Privacy policy not found for language: ${lang}`)
+}
+
+const { Content } = await privacyEntry.render()
+const { title, description, lastUpdated } = privacyEntry.data
+---
+
+<Layout seo={{ title, description }}>
+  <main class="flex flex-col gap-8 md:gap-12 post">
+    <h1 class="font-lato text-4xl dark:text-neutral-100 mb-2">{title}</h1>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 italic">
+      {lang === 'es' ? 'Última actualización' : 'Last updated'}: {
+        lastUpdated.toLocaleDateString(lang, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      }
+    </p>
+    <Content />
+  </main>
+</Layout>
