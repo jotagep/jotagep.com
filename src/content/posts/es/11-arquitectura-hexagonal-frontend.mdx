@@ -48,52 +48,52 @@ Vamos a desglosar las capas principales:
 Este es el corazón de tu aplicación. Contiene:
 
 - **Models**: Estructuras de datos puras que representan tus entidades de negocio.
-- **Use Cases**: Reglas de negocio específicas de la aplicación. ¿Qué puede *hacer* el usuario?
-- **Repository Interfaces (Ports)**: Contratos que definen *cómo* acceder a los datos, no *de dónde* vienen.
+- **Use Cases**: Reglas de negocio específicas de la aplicación. ¿Qué puede _hacer_ el usuario?
+- **Repository Interfaces (Ports)**: Contratos que definen _cómo_ acceder a los datos, no _de dónde_ vienen.
 
 ```typescript
 // domain/models/Product.ts
 export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  category: string;
+  id: string
+  name: string
+  price: number
+  category: string
 }
 
 // domain/models/Cart.ts
-import { Product } from './Product';
+import { Product } from './Product'
 
 export interface Cart {
-  id: string;
-  items: CartItem[];
+  id: string
+  items: CartItem[]
 }
 
 export interface CartItem {
-  product: Product;
-  quantity: number;
+  product: Product
+  quantity: number
 }
 ```
 
 ### 2. Ports (Interfaces)
 
-Los ports son los **contratos** entre tu domain y el mundo exterior. Definen lo que tu domain *necesita*, no cómo se implementa.
+Los ports son los **contratos** entre tu domain y el mundo exterior. Definen lo que tu domain _necesita_, no cómo se implementa.
 
 ```typescript
 // domain/ports/ProductRepository.ts
-import { Product } from '../models/Product';
+import { Product } from '../models/Product'
 
 export interface ProductRepository {
-  getAll(): Promise<Product[]>;
-  getById(id: string): Promise<Product | null>;
+  getAll(): Promise<Product[]>
+  getById(id: string): Promise<Product | null>
 }
 
 // domain/ports/CartRepository.ts
-import { Cart } from '../models/Cart';
+import { Cart } from '../models/Cart'
 
 export interface CartRepository {
-  getCart(userId: string): Promise<Cart>;
-  addItem(userId: string, productId: string, quantity: number): Promise<Cart>;
-  removeItem(userId: string, productId: string): Promise<Cart>;
+  getCart(userId: string): Promise<Cart>
+  addItem(userId: string, productId: string, quantity: number): Promise<Cart>
+  removeItem(userId: string, productId: string): Promise<Cart>
 }
 ```
 
@@ -103,26 +103,26 @@ Los use cases orquestan la lógica de negocio. Dependen únicamente de ports (in
 
 ```typescript
 // domain/usecases/AddProductToCart.ts
-import { CartRepository } from '../ports/CartRepository';
-import { ProductRepository } from '../ports/ProductRepository';
+import { CartRepository } from '../ports/CartRepository'
+import { ProductRepository } from '../ports/ProductRepository'
 
 export class AddProductToCart {
   constructor(
     private cartRepository: CartRepository,
-    private productRepository: ProductRepository
+    private productRepository: ProductRepository,
   ) {}
 
   async execute(userId: string, productId: string, quantity: number) {
-    const product = await this.productRepository.getById(productId);
+    const product = await this.productRepository.getById(productId)
     if (!product) {
-      throw new Error('Product not found');
+      throw new Error('Product not found')
     }
 
     if (quantity <= 0) {
-      throw new Error('Quantity must be greater than zero');
+      throw new Error('Quantity must be greater than zero')
     }
 
-    return this.cartRepository.addItem(userId, productId, quantity);
+    return this.cartRepository.addItem(userId, productId, quantity)
   }
 }
 ```
@@ -138,28 +138,28 @@ Aquí es donde viven todas las implementaciones concretas:
 
 ```typescript
 // infrastructure/repositories/HttpProductRepository.ts
-import { ProductRepository } from '../../domain/ports/ProductRepository';
-import { Product } from '../../domain/models/Product';
-import { HttpClient } from '../http/HttpClient';
+import { ProductRepository } from '../../domain/ports/ProductRepository'
+import { Product } from '../../domain/models/Product'
+import { HttpClient } from '../http/HttpClient'
 
 interface ProductDTO {
-  id: string;
-  name: string;
-  price: number;
-  category: string;
+  id: string
+  name: string
+  price: number
+  category: string
 }
 
 export class HttpProductRepository implements ProductRepository {
   constructor(private http: HttpClient) {}
 
   async getAll(): Promise<Product[]> {
-    const dtos = await this.http.get<ProductDTO[]>('/api/products');
-    return dtos.map(this.toDomain);
+    const dtos = await this.http.get<ProductDTO[]>('/api/products')
+    return dtos.map(this.toDomain)
   }
 
   async getById(id: string): Promise<Product | null> {
-    const dto = await this.http.get<ProductDTO>(`/api/products/${id}`);
-    return dto ? this.toDomain(dto) : null;
+    const dto = await this.http.get<ProductDTO>(`/api/products/${id}`)
+    return dto ? this.toDomain(dto) : null
   }
 
   private toDomain(dto: ProductDTO): Product {
@@ -168,7 +168,7 @@ export class HttpProductRepository implements ProductRepository {
       name: dto.name,
       price: dto.price,
       category: dto.category,
-    };
+    }
   }
 }
 ```
@@ -179,21 +179,21 @@ Dependency Injection (DI) es la técnica que hace que todo esto funcione. En lug
 
 ```typescript
 // infrastructure/di/Container.ts
-import { HttpProductRepository } from '../repositories/HttpProductRepository';
-import { HttpCartRepository } from '../repositories/HttpCartRepository';
-import { AxiosHttpClient } from '../http/AxiosHttpClient';
-import { AddProductToCart } from '../../domain/usecases/AddProductToCart';
+import { HttpProductRepository } from '../repositories/HttpProductRepository'
+import { HttpCartRepository } from '../repositories/HttpCartRepository'
+import { AxiosHttpClient } from '../http/AxiosHttpClient'
+import { AddProductToCart } from '../../domain/usecases/AddProductToCart'
 
 // Crear instancias de infrastructure
-const httpClient = new AxiosHttpClient('https://api.example.com');
-const productRepository = new HttpProductRepository(httpClient);
-const cartRepository = new HttpCartRepository(httpClient);
+const httpClient = new AxiosHttpClient('https://api.example.com')
+const productRepository = new HttpProductRepository(httpClient)
+const cartRepository = new HttpCartRepository(httpClient)
 
 // Inyectar en los use cases
 export const addProductToCart = new AddProductToCart(
   cartRepository,
-  productRepository
-);
+  productRepository,
+)
 ```
 
 En frameworks como Angular, DI está integrado. En React o Vue, puedes usar librerías como `tsyringe`, `inversify`, o simplemente crear tu propio container.
@@ -202,12 +202,15 @@ La belleza de DI es que puedes cambiar implementaciones fácilmente:
 
 ```typescript
 // Para testing
-const mockProductRepository = new MockProductRepository();
-const addProductToCart = new AddProductToCart(cartRepository, mockProductRepository);
+const mockProductRepository = new MockProductRepository()
+const addProductToCart = new AddProductToCart(
+  cartRepository,
+  mockProductRepository,
+)
 
 // Para una API diferente
-const fetchHttpClient = new FetchHttpClient('https://other-api.com');
-const productRepository = new HttpProductRepository(fetchHttpClient);
+const fetchHttpClient = new FetchHttpClient('https://other-api.com')
+const productRepository = new HttpProductRepository(fetchHttpClient)
 ```
 
 ## ¿Por Qué Esto Importa para el Frontend? 🎯
@@ -232,18 +235,20 @@ describe('AddProductToCart', () => {
       getCart: jest.fn(),
       addItem: jest.fn().mockResolvedValue({ id: '1', items: [] }),
       removeItem: jest.fn(),
-    };
+    }
     const mockProductRepo: ProductRepository = {
       getAll: jest.fn(),
-      getById: jest.fn().mockResolvedValue({ id: 'p1', name: 'Test', price: 10 }),
-    };
+      getById: jest
+        .fn()
+        .mockResolvedValue({ id: 'p1', name: 'Test', price: 10 }),
+    }
 
-    const useCase = new AddProductToCart(mockCartRepo, mockProductRepo);
-    const result = await useCase.execute('user1', 'p1', 1);
+    const useCase = new AddProductToCart(mockCartRepo, mockProductRepo)
+    const result = await useCase.execute('user1', 'p1', 1)
 
-    expect(mockCartRepo.addItem).toHaveBeenCalledWith('user1', 'p1', 1);
-  });
-});
+    expect(mockCartRepo.addItem).toHaveBeenCalledWith('user1', 'p1', 1)
+  })
+})
 ```
 
 ### 3. Mantenibilidad
@@ -260,40 +265,44 @@ Veamos cómo encajan todas las piezas en un componente real:
 
 ```tsx
 // presentation/components/ProductList.tsx
-import { useEffect, useState } from 'react';
-import { Product } from '../../domain/models/Product';
-import { GetAllProducts } from '../../domain/usecases/GetAllProducts';
-import { AddProductToCart } from '../../domain/usecases/AddProductToCart';
+import { useEffect, useState } from 'react'
+import { Product } from '../../domain/models/Product'
+import { GetAllProducts } from '../../domain/usecases/GetAllProducts'
+import { AddProductToCart } from '../../domain/usecases/AddProductToCart'
 
 interface ProductListProps {
-  getAllProducts: GetAllProducts;
-  addProductToCart: AddProductToCart;
+  getAllProducts: GetAllProducts
+  addProductToCart: AddProductToCart
 }
 
-export function ProductList({ getAllProducts, addProductToCart }: ProductListProps) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+export function ProductList({
+  getAllProducts,
+  addProductToCart,
+}: ProductListProps) {
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getAllProducts.execute()
+    getAllProducts
+      .execute()
       .then(setProducts)
-      .finally(() => setLoading(false));
-  }, [getAllProducts]);
+      .finally(() => setLoading(false))
+  }, [getAllProducts])
 
   const handleAddToCart = async (productId: string) => {
     try {
-      await addProductToCart.execute('current-user', productId, 1);
-      alert('¡Producto añadido al carrito!');
+      await addProductToCart.execute('current-user', productId, 1)
+      alert('¡Producto añadido al carrito!')
     } catch (error) {
-      alert(error.message);
+      alert(error.message)
     }
-  };
+  }
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return <div>Cargando...</div>
 
   return (
     <div className="product-list">
-      {products.map(product => (
+      {products.map((product) => (
         <div key={product.id} className="product-card">
           <h3>{product.name}</h3>
           <p>${product.price}</p>
@@ -303,7 +312,7 @@ export function ProductList({ getAllProducts, addProductToCart }: ProductListPro
         </div>
       ))}
     </div>
-  );
+  )
 }
 ```
 
@@ -358,15 +367,15 @@ Tus domain models deben ser **plain objects**. No uses decoradores o tipos espec
 ```typescript
 // ❌ Mal: Usar tipos específicos de React en el domain
 export interface Product {
-  id: string;
-  renderCard: () => JSX.Element; // ¡No!
+  id: string
+  renderCard: () => JSX.Element // ¡No!
 }
 
 // ✅ Bien: Domain model puro
 export interface Product {
-  id: string;
-  name: string;
-  price: number;
+  id: string
+  name: string
+  price: number
 }
 ```
 
