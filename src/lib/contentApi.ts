@@ -1,11 +1,15 @@
+import type { CollectionEntry } from 'astro:content'
 import { getCollection, getEntries } from 'astro:content'
 
 import { defaultLang, type Language } from '@/i18n/ui'
 
 export const getPosts = async (lang: Language = defaultLang) => {
-  const posts = await getCollection('posts', ({ id, data }) => {
+  const posts = await getCollection('posts', ({ filePath, data }) => {
     const isDev = process.env.NODE_ENV !== 'production'
-    return id.startsWith(`${lang}/`) && (data.isDraft === false || isDev)
+    return (
+      !!filePath?.includes(`/posts/${lang}/`) &&
+      (data.isDraft === false || isDev)
+    )
   })
   const sortedPosts = posts.sort((a, b) => {
     return (
@@ -24,6 +28,8 @@ export const getPostsByTag = async (
   return posts.filter((post) => post.data.tags?.includes(tag))
 }
 
-export const getRelatedPosts = async (relatedPosts: any) => {
-  return await getEntries(relatedPosts)
+export const getRelatedPosts = async (
+  relatedPosts: CollectionEntry<'posts'>['data']['relatedPosts'],
+): Promise<CollectionEntry<'posts'>[]> => {
+  return await getEntries(relatedPosts ?? [])
 }

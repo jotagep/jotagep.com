@@ -68,7 +68,7 @@ const posts = page.data
           <article class="group relative flex max-h-40 w-full gap-2 border-t border-gray-300 py-4 transition-colors duration-300 hover:bg-gray-200 dark:border-gray-800 dark:hover:bg-gray-800 md:px-2 md:py-6">
             <a
               aria-label={post.data.title}
-              href={getBlogPath(lang, post.slug)}
+              href={getBlogPath(lang, post.id)}
               class="absolute inset-0 z-10"
             />
             {post.data.cover && (
@@ -77,13 +77,13 @@ const posts = page.data
                 src={post.data.cover as ImageMetadata}
                 alt={post.data.title}
                 width={600}
-                transitionName={`post-img-${post.slug}`}
+                transitionName={`post-img-${post.id}`}
               />
             )}
             <div class="flex flex-1 flex-col items-start gap-3 md:ml-4">
               <h2
                 class="line-clamp-3 text-lg font-bold md:line-clamp-1 md:text-2xl"
-                transition:name={`post-title-${post.slug}`}
+                transition:name={`post-title-${post.id}`}
               >
                 {post.data.title}
               </h2>

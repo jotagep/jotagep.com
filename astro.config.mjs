@@ -2,7 +2,6 @@ import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
-import tailwind from '@astrojs/tailwind'
 
 import config from './src/data/config'
 import { defaultLang, langCodes, locales } from './src/i18n/ui'
@@ -26,7 +25,6 @@ const LAST_UPDATE_HOME = new Date().toISOString()
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    tailwind(),
     sitemap({
       i18n: {
         defaultLocale: defaultLang,
@@ -83,6 +81,10 @@ export default defineConfig({
     process.env.NODE_ENV === 'production'
       ? config.siteUrl
       : 'http://localhost:4321',
+  // Astro 7 changed the `compressHTML` default from `true` to `'jsx'` (strips
+  // whitespace between inline elements). Pinned to `true` to keep the v5
+  // output identical and avoid words gluing together in prose and links.
+  compressHTML: true,
   markdown: {
     syntaxHighlight: 'shiki',
     shikiConfig: {
