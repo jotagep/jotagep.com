@@ -37,7 +37,11 @@ if (props.src && !hasCustomHeight) {
   transition:name={transitionName}
   {style}
 >
-  <Image data-blur {...props} transition:persist={`${transitionName}-loaded`} />
+  <Image
+    data-blur
+    {...props}
+    transition:persist={transitionName ? `${transitionName}-loaded` : undefined}
+  />
   <Image
     src={props.src}
     quality={5}
