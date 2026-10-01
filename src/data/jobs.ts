@@ -1,6 +1,7 @@
 import type { Language } from '@/i18n/ui'
 import { useTranslations } from '@/i18n/utils'
 
+import logo011h from '../assets/jobs/011h.png'
 import logoRedpoints from '../assets/jobs/redpoints.png'
 import logoSoluble from '../assets/jobs/soluble.png'
 import logoSpellborne from '../assets/jobs/spellborne.jpg'
@@ -23,6 +24,15 @@ export type Job = {
 export const jobs: Job[] = [
   {
     active: true,
+    title: 'Frontend Engineer',
+    status: 'full-time',
+    company: '011h',
+    logo: logo011h,
+    url: 'https://011h.com/',
+    from: new Date('2026-07-01'),
+  },
+  {
+    active: false,
     title: 'Full Stack Developer / Blockchain',
     status: 'contractor',
     company: 'Spellborne (MonStudios)',

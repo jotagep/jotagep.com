@@ -1,6 +1,6 @@
 ---
 //@ts-nocheck
-import { ViewTransitions } from 'astro:transitions'
+import { ClientRouter } from 'astro:transitions'
 import { SEO } from 'astro-seo'
 
 import config from '@/data/config'
@@ -157,7 +157,7 @@ const openGraph = {
     }}
   />
   <HeadHrefLangs {translatedPostSlug} />
-  <ViewTransitions />
+  <ClientRouter />
   <script>
     document.addEventListener('astro:page-load', () => {
       const darkModeButton =

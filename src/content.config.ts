@@ -1,9 +1,23 @@
-import { defineCollection, reference, z } from 'astro:content'
+import { glob } from 'astro/loaders'
+import { z } from 'astro/zod'
+import { defineCollection, reference } from 'astro:content'
 
 import { tagSlugEnum } from '@/data/tags'
 
 const postsCollection = defineCollection({
-  type: 'content',
+  loader: glob({
+    pattern: '**/*.{md,mdx}',
+    base: './src/content/posts',
+    generateId: ({ entry, data }) => {
+      const slug = typeof data.slug === 'string' ? data.slug.trim() : ''
+      if (!slug) {
+        throw new Error(
+          `Post "${entry}" is missing a "slug" frontmatter field. It is required to generate stable URLs and to resolve relatedPosts/translated references.`,
+        )
+      }
+      return slug
+    },
+  }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -20,7 +34,11 @@ const postsCollection = defineCollection({
 })
 
 const privacyCollection = defineCollection({
-  type: 'content',
+  loader: glob({
+    pattern: '*.{md,mdx}',
+    base: './src/content/privacy',
+    generateId: ({ entry }) => entry.replace(/\.(md|mdx)$/, ''),
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),

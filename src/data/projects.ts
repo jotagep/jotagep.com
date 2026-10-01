@@ -9,6 +9,13 @@ export type Project = {
 
 const projects: Project[] = [
   {
+    title: 'Football Genius ⚽',
+    description:
+      'The ultimate daily football trivia platform. Play ten engaging modes: Football Imposter, Football Grid, Guess the Player, Football Wordle, Swipe, Career, Ranking, Football Draft, Guess The Club and Penalty Shootout. Compete daily and track your performance with detailed statistics.',
+    techs: ['Cloudflare', 'Astro', 'Hono'],
+    link: 'https://footballgenius.app/',
+  },
+  {
     title: 'Battleship Multiplayer Game',
     description:
       'Real-time Battleship built for fast, lightweight, globally distributed multiplayer play. It features a Hono API on Cloudflare Workers and PartyKit for real-time state sync, all managed in a Turborepo monorepo.',
@@ -45,12 +52,6 @@ const projects: Project[] = [
       'Redis',
     ],
     link: 'https://github.com/jotagep/next-redis-movies-app',
-  },
-  {
-    title: 'Jotagep portfolio',
-    description: 'Personal portfolio built with Astro',
-    techs: ['Astro', 'TypeScript', 'Tailwind', 'MDX'],
-    link: 'https://github.com/jotagep/jotagep.com',
   },
 ]
 

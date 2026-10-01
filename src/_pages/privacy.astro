@@ -1,5 +1,5 @@
 ---
-import { getEntry } from 'astro:content'
+import { getEntry, render } from 'astro:content'
 
 import type { Language } from '@/i18n/ui'
 
@@ -12,7 +12,7 @@ if (!privacyEntry) {
   throw new Error(`Privacy policy not found for language: ${lang}`)
 }
 
-const { Content } = await privacyEntry.render()
+const { Content } = await render(privacyEntry)
 const { title, description, lastUpdated } = privacyEntry.data
 ---
 

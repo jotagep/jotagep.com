@@ -53,9 +53,10 @@ const {
     {
       locales.map((supportedLanguage: string) => {
         const isCurrentLanguage = supportedLanguage === currentLanguage
-        const path = isCurrentLanguage
-          ? pathname
-          : translatedPath.replace(`/${currentLanguage}`, '')
+        const path = (isCurrentLanguage ? pathname : translatedPath).replace(
+          `/${currentLanguage}`,
+          '',
+        )
         let value = getRelativeLocaleUrl(supportedLanguage, path)
         const flag = showFlag ? localeEmoji(supportedLanguage) + ' ' : ''
 

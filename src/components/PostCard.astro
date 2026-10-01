@@ -17,7 +17,7 @@ export interface Props {
 const { noTransition, post, showDescription = true } = Astro.props
 const { cover, title, publishedAt, description } = post.data
 
-const transitionName = noTransition ? undefined : `post-img-${post.slug}`
+const transitionName = noTransition ? undefined : `post-img-${post.id}`
 
 const lang = Astro.currentLocale as Language
 ---
@@ -25,7 +25,7 @@ const lang = Astro.currentLocale as Language
 <article class="relative overflow-hidden flex flex-col gap-2 card">
   <a
     aria-label={title}
-    href={getBlogPath(lang, post.slug)}
+    href={getBlogPath(lang, post.id)}
     class="absolute inset-0 z-10"></a>
   {
     cover && (
@@ -41,7 +41,7 @@ const lang = Astro.currentLocale as Language
   <div class="flex flex-1 w-full flex-col justify-between p-5">
     <h4
       class="dark:text-neutral-100 line-clamp-2 font-semibold text-xl mb-4"
-      transition:name={`post-title-home-${post.slug}`}
+      transition:name={`post-title-home-${post.id}`}
     >
       {title}
     </h4>
