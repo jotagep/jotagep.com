@@ -3,6 +3,7 @@ import LanguageSelector from '@/components/shared/LanguageSelector.astro'
 import Logo from '@/components/shared/Logo.astro'
 
 import type { Language } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/utils'
 
 import { getBlogPath, getHomePath } from '@/utils/pathHelper'
 
@@ -10,14 +11,15 @@ import DarkMode from './shared/DarkMode.astro'
 import Navigation from './shared/Navigation.astro'
 
 const lang = Astro.currentLocale as Language
+const t = useTranslations(lang)
 
 const navs = [
   {
-    label: 'Home',
+    label: t('navigation.home'),
     href: getHomePath(lang),
   },
   {
-    label: 'Blog',
+    label: t('navigation.blog'),
     href: getBlogPath(lang),
   },
 ]

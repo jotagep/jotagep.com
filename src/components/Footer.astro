@@ -1,8 +1,13 @@
 ---
+import type { Language } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/utils'
+
 import Link from './shared/Link.astro'
 import SocialLinks from './shared/SocialLinks.astro'
 import AstroLogo from './AstroLogo.astro'
 
+const lang = Astro.currentLocale as Language
+const t = useTranslations(lang)
 const year = new Date().getFullYear()
 ---
 
@@ -20,7 +25,7 @@ const year = new Date().getFullYear()
   </a>
   <div>
     <span>
-      Built with
+      {t('footer.builtWith')}
       <Link color="orange" href="https://astro.build/">Astro</Link></span
     >
     <span class="ml-1">© Jotagep {year}</span>

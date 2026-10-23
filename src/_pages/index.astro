@@ -14,7 +14,7 @@ import SocialLinks from '@/components/shared/SocialLinks.astro'
 
 import config from '@/data/config'
 import { lastJobs } from '@/data/jobs'
-import projects from '@/data/projects'
+import { getProjects } from '@/data/projects'
 
 import Translate from '@/i18n/Translate.astro'
 import type { Language } from '@/i18n/ui'
@@ -40,6 +40,7 @@ const linkedInUrl = config.socials.find(
 const t = useTranslations(lang)
 
 const recentJobs = lastJobs.slice(0, 2)
+const projects = getProjects(lang)
 ---
 
 <Layout>
