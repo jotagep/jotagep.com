@@ -8,6 +8,8 @@ import config from '@/data/config'
 import type { Language } from '@/i18n/ui'
 import { useTranslations } from '@/i18n/utils'
 
+import { getRssPath } from '@/utils/pathHelper'
+
 import HeadHrefLangs from './HeadHrefLangs.astro'
 
 export type Props = {
@@ -186,6 +188,12 @@ const jsonLd =
         },
         { rel: 'manifest', href: '/manifest.json' },
         { rel: 'sitemap', href: '/sitemap-index.xml' },
+        {
+          rel: 'alternate',
+          type: 'application/rss+xml',
+          title: defaultTitle,
+          href: getRssPath(lang),
+        },
       ],
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
