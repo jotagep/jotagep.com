@@ -44,7 +44,7 @@ const textByStatus = getTextByStatus(lang)[job.status]
   </div>
   <div class="flex justify-center w-4">
     <Tooltip content={textByStatus}>
-      <Pulse color={colorByStatus} />
+      <Pulse active={job.active} color={colorByStatus} />
     </Tooltip>
   </div>
 </a>
