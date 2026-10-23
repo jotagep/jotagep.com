@@ -92,7 +92,7 @@ const activeJobs = lastJobs.filter((job) => job.active).slice(0, 2)
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       {
         posts.length !== 0 &&
-          posts.slice(0, 2).map((post) => <PostCard {post} />)
+          posts.slice(0, 4).map((post) => <PostCard {post} />)
       }
     </div>
   </Section>
