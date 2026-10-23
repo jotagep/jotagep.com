@@ -5,6 +5,9 @@ import { SEO } from 'astro-seo'
 
 import config from '@/data/config'
 
+import type { Language } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/utils'
+
 import HeadHrefLangs from './HeadHrefLangs.astro'
 
 export type Props = {
@@ -22,6 +25,12 @@ export type Props = {
 
 const { seo, translatedPostSlug } = Astro.props
 
+const lang = Astro.currentLocale as Language
+const t = useTranslations(lang)
+
+const defaultTitle = t('site.title') || config.title
+const defaultDescription = t('site.description') || config.description
+
 const {
   title,
   type = 'website',
@@ -32,28 +41,64 @@ const {
   publishedTime,
 } = seo
 
+const resolvedImage = image
+  ? new URL(image, config.siteUrl).href
+  : `${config.siteUrl}og.png`
+const resolvedUrl = url || new URL(Astro.url.pathname, config.siteUrl).href
+
 const openGraph = {
   publishedTime,
-  title: title || config.title,
+  title: title || defaultTitle,
   type,
-  image: image || `${config.siteUrl}og.png`,
-  alt: title || config.title,
-  url: url || config.siteUrl,
-  description: description || config.description,
+  image: resolvedImage,
+  alt: title || defaultTitle,
+  url: resolvedUrl,
+  description: description || defaultDescription,
 }
+
+const jsonLd =
+  type === 'article'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: openGraph.title,
+        description: openGraph.description,
+        image: openGraph.image,
+        url: openGraph.url,
+        ...(publishedTime && {
+          datePublished: publishedTime.toISOString(),
+        }),
+        author: {
+          '@type': 'Person',
+          name: config.logoTitle,
+          url: config.siteUrl,
+          sameAs: config.socials.map((social) => social.link),
+        },
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: config.logoTitle,
+        jobTitle: 'Product Engineer',
+        description: openGraph.description,
+        url: config.siteUrl,
+        sameAs: config.socials.map((social) => social.link),
+      }
 ---
 
 <head>
   <SEO
     charset="UTF-8"
-    title={title || config.title}
-    description={description || config.description}
+    title={openGraph.title}
+    description={openGraph.description}
+    canonical={openGraph.url}
     noindex={noindex || false}
     openGraph={{
       basic: {
         title: openGraph.title,
         type: openGraph.type,
         image: openGraph.image,
+        url: openGraph.url,
       },
       image: {
         alt: openGraph.alt,
@@ -157,6 +202,7 @@ const openGraph = {
     }}
   />
   <HeadHrefLangs {translatedPostSlug} />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <ClientRouter />
   <script>
     document.addEventListener('astro:page-load', () => {
