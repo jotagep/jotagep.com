@@ -5,9 +5,12 @@ import { getEntry, render } from 'astro:content'
 import PostCard from '@/components/PostCard.astro'
 import type { Props as HeadTagsProps } from '@/components/seo/HeadTags.astro'
 import Alert from '@/components/shared/Alert.astro'
+import Badge from '@/components/shared/Badge/Badge.astro'
 import DatePost from '@/components/shared/DatePost.astro'
 import Icon from '@/components/shared/Icon.astro'
 import ImageBlur from '@/components/shared/ImageBlur.astro'
+
+import { TAGS } from '@/data/tags'
 
 import type { Language } from '@/i18n/ui'
 import { useTranslations } from '@/i18n/utils'
@@ -15,6 +18,9 @@ import { useTranslations } from '@/i18n/utils'
 import Layout from '@/layouts/Layout.astro'
 
 import { getRelatedPosts } from '@/lib/contentApi'
+
+import { getTagPath } from '@/utils/pathHelper'
+import getReadingTime from '@/utils/readingTime'
 
 const lang = Astro.currentLocale as Language
 
@@ -28,6 +34,8 @@ const { href } = Astro.url
 
 const { Content } = await render(post)
 const relatedPosts = await getRelatedPosts(post.data.relatedPosts)
+const postTags = TAGS.filter((tag) => post.data.tags?.includes(tag.slug))
+const readingTime = getReadingTime(post.body)
 const translatedPost = post.data.translated
   ? await getEntry('posts', post.data.translated.id)
   : undefined
@@ -67,7 +75,32 @@ const seo: HeadTagsProps['seo'] = {
       </h1>
       <p class="italic">{post.data.description}</p>
       <hr class="w-full border border-gray-200 dark:border-gray-800 my-4" />
-      <DatePost date={post.data.publishedAt} />
+      <div class="flex w-full flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <DatePost date={post.data.publishedAt} />
+          <span aria-hidden="true">•</span>
+          <span class="flex items-center gap-1.5 text-sm">
+            <Icon icon="clock" class="h-4 w-4" />
+            {readingTime}
+            {t('blog.readingTime')}
+          </span>
+        </div>
+        {
+          postTags.length > 0 && (
+            <ul role="list" class="flex flex-wrap gap-2">
+              {postTags.map((tag) => (
+                <li>
+                  <a href={getTagPath(lang, tag.slug)}>
+                    <Badge class="px-3 py-1.5 text-xs" color={tag.color}>
+                      {tag.label}
+                    </Badge>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
       {
         post.data.cover && (
           <ImageBlur

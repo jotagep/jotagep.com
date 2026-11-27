@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "My awesome website!",
-    "description": "Here is the description of my awesome website!"
+    "title": "Jotagep - Product Engineer",
+    "description": "Product Engineer turning ideas into end-to-end products, shipping in hours, and validating with real data."
   },
   "common": {
     "date": "Date",
@@ -10,7 +10,7 @@
   },
   "home": {
     "title": "It's Jotagep 👋",
-    "description": "I turn ideas into code, push to production in hours, refine with real data—and keep the loop going",
+    "description": "From *Frontend Engineer* to *Product Engineer*: I own the problem, build end-to-end, ship in hours, and validate with real data.",
     "latestPosts": "Latest posts",
     "noPosts": "Soon, stay connected 👀...",
     "selectedProjects": "Selected projects",
@@ -32,8 +32,13 @@
     "blog": "Blog",
     "home": "Home"
   },
+  "footer": {
+    "builtWith": "Built with"
+  },
   "blog": {
     "title": "Blog",
+    "allTags": "All",
+    "readingTime": "min read",
     "moreRelatedPosts": "More related posts",
     "olderPost": "This article is more than 2 years old"
   },

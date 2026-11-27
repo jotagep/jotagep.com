@@ -14,7 +14,7 @@ import SocialLinks from '@/components/shared/SocialLinks.astro'
 
 import config from '@/data/config'
 import { lastJobs } from '@/data/jobs'
-import projects from '@/data/projects'
+import { getProjects } from '@/data/projects'
 
 import Translate from '@/i18n/Translate.astro'
 import type { Language } from '@/i18n/ui'
@@ -39,7 +39,8 @@ const linkedInUrl = config.socials.find(
 
 const t = useTranslations(lang)
 
-const activeJobs = lastJobs.filter((job) => job.active).slice(0, 2)
+const recentJobs = lastJobs.slice(0, 2)
+const projects = getProjects(lang)
 ---
 
 <Layout>
@@ -73,8 +74,8 @@ const activeJobs = lastJobs.filter((job) => job.active).slice(0, 2)
     <SectionHeader title={t('home.workingAt')} />
     <div class="flex flex-col gap-4 md:flex-row md:flex-wrap">
       {
-        activeJobs.length !== 0 &&
-          activeJobs.map((job) => <JobCard job={job} />)
+        recentJobs.length !== 0 &&
+          recentJobs.map((job) => <JobCard job={job} />)
       }
     </div>
   </Section>
@@ -92,7 +93,7 @@ const activeJobs = lastJobs.filter((job) => job.active).slice(0, 2)
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       {
         posts.length !== 0 &&
-          posts.slice(0, 2).map((post) => <PostCard {post} />)
+          posts.slice(0, 4).map((post) => <PostCard {post} />)
       }
     </div>
   </Section>

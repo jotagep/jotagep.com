@@ -9,9 +9,10 @@ type Social = {
 const config = {
   mail: 'jotagepweb@gmail.com',
   siteUrl: 'https://jotagep.com/',
-  title: 'Jotagep - Your Developer',
+  title: 'Jotagep - Product Engineer',
   logoTitle: 'Jotagep',
-  description: 'A minimal portfolio template built with Astro and Tailwindcss.',
+  description:
+    'Product Engineer turning ideas into end-to-end products, shipping in hours, and validating with real data.',
   postPerPage: 8,
   socials: [
     {

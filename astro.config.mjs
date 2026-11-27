@@ -92,4 +92,11 @@ export default defineConfig({
       wrap: false,
     },
   },
+  vite: {
+    server: {
+      fs: {
+        allow: ['../..'],
+      },
+    },
+  },
 })

@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Mi web personal",
-    "description": "Aquí está la descripción de mi web personal"
+    "title": "Jotagep - Product Engineer",
+    "description": "Product Engineer construyendo productos de punta a punta, desplegando en horas y validando con datos reales."
   },
   "common": {
     "date": "Fecha",
@@ -10,7 +10,7 @@
   },
   "home": {
     "title": "Soy Jotagep 👋",
-    "description": "Transformo ideas en código, despliego en horas, afino con datos reales y repito el bucle de nuevo.",
+    "description": "De *Frontend Engineer* a *Product Engineer*: pienso en el problema, construyo de punta a punta, despliego en horas y valido con datos reales.",
     "latestPosts": "Últimos posts",
     "noPosts": "Estamos trabajando en ello 👀...",
     "selectedProjects": "Proyectos destacados",
@@ -21,19 +21,24 @@
     },
     "seeAllPosts": "Ver todos los posts",
     "viewMoreProjects": "Ver más proyectos",
-    "workingAt": "Ultimamente trabajando en"
+    "workingAt": "Últimamente trabajando en"
   },
   "job": {
     "fullTime": "Tiempo completo",
     "contractor": "Freelance"
   },
   "navigation": {
-    "about": "Sobre mi",
+    "about": "Sobre mí",
     "blog": "Blog",
     "home": "Inicio"
   },
+  "footer": {
+    "builtWith": "Hecho con"
+  },
   "blog": {
     "title": "Blog",
+    "allTags": "Todos",
+    "readingTime": "min de lectura",
     "moreRelatedPosts": "Más posts relacionados",
     "olderPost": "Este artículo tiene más de 2 años"
   },

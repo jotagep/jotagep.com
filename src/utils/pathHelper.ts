@@ -15,3 +15,7 @@ export const getBlogPath = (lang: Language = defaultLang, slug = '') => {
 export const getTagPath = (lang: Language = defaultLang, tag = '') => {
   return getRelativeLocaleUrl(lang, `${ROUTES.TAG}/${tag}`).replace(/\/$/, '')
 }
+
+export const getRssPath = (lang: Language = defaultLang) => {
+  return getRelativeLocaleUrl(lang, '/rss.xml').replace(/\/$/, '')
+}

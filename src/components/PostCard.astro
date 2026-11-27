@@ -18,6 +18,7 @@ const { noTransition, post, showDescription = true } = Astro.props
 const { cover, title, publishedAt, description } = post.data
 
 const transitionName = noTransition ? undefined : `post-img-${post.id}`
+const titleTransitionName = noTransition ? undefined : `post-title-${post.id}`
 
 const lang = Astro.currentLocale as Language
 ---
@@ -41,7 +42,7 @@ const lang = Astro.currentLocale as Language
   <div class="flex flex-1 w-full flex-col justify-between p-5">
     <h4
       class="dark:text-neutral-100 line-clamp-2 font-semibold text-xl mb-4"
-      transition:name={`post-title-home-${post.id}`}
+      transition:name={titleTransitionName}
     >
       {title}
     </h4>
